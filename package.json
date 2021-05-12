@@ -1,19 +1,27 @@
 {
-  "name": "web-nc-backend",
+  "name": "sakila",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "export NODE_ENV=develop && nodemon",
+    "start": "export NODE_ENV=production && node src/index.js",
+    "test": "mocha --timeout 10000",
+    "lint": "eslint --fix --config .eslintrc.json \"**/*.js\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nvtrung97/WEB-NC-BackEnd.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nvtrung97/WEB-NC-BackEnd/issues"
-  },
-  "homepage": "https://github.com/nvtrung97/WEB-NC-BackEnd#readme"
+  "dependencies": {
+    "ajv": "^7.2.3",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "randomstring": "^1.1.5"
+  }
 }
