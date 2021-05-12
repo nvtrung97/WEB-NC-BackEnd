@@ -2,10 +2,10 @@
   "name": "sakila",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "export NODE_ENV=develop && nodemon",
-    "start": "export NODE_ENV=production && node src/index.js",
+    "start": "export NODE_ENV=production && node app.js",
     "test": "mocha --timeout 10000",
     "lint": "eslint --fix --config .eslintrc.json \"**/*.js\""
   },
