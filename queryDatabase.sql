@@ -18,11 +18,11 @@ CREATE TABLE users (
     _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    name VARCHAR(50) CHARACTER NOT NULL,
+    name VARCHAR(50) NOT NULL,
     birthday DATETIME NOT NULL,
     phone VARCHAR(20) NOT NULL,
     address VARCHAR(50) NOT NULL,
-    role_id INT NOT NULL,
+    role VARCHAR(20) NOT NULL,
     create_at DATETIME,
     update_at DATETIME,
     PRIMARY KEY (_id)
@@ -113,6 +113,7 @@ CREATE TABLE registered_lists  (
   update_at DATETIME,
   PRIMARY KEY (_id)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
+
 
 -- ----
 ALTER TABLE products
