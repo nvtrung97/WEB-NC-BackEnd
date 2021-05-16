@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "export NODE_ENV=develop && nodemon",
     "start": "export NODE_ENV=production && node app.js",
+    "start:test": "export NODE_ENV=testing && node app.js",
     "test": "mocha --timeout 10000",
     "lint": "eslint --fix --config .eslintrc.json \"**/*.js\""
   },
@@ -18,10 +19,13 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "google-auth-library": "^7.0.4",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.2",
+    "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "mysql2": "^2.2.5",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "uuid": "^8.3.2"
   }
 }

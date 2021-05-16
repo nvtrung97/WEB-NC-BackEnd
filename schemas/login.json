@@ -1,0 +1,25 @@
+{
+    "required": [
+      "login_type",
+      "username",
+      "password",
+      "token_id"
+    ],
+    "additionalProperties": false,
+    "type":"object",
+    "properties": {
+      "login_type": {
+        "type": "string"
+      },
+      "username": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "token_id": {
+        "type": "string"
+      }
+    }
+}
+

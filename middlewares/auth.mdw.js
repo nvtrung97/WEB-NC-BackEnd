@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken');
-var createToken = function (auth, expires ) {
+var createToken = function (_id, expires) {
     return jwt.sign({
-        userId: auth.id
+        id: _id
     }, process.env.SECRECT_KEY,
         {
             expiresIn: expires
@@ -40,7 +40,7 @@ module.exports = {
         }
     },
     refreshToken: async (req, res, next) => {
-      // sửa lại... 
+        // sửa lại... 
         let { accessToken, refreshToken, deviceId } = req.body;
         accessToken = accessToken.split(' ')[1];
         let { userId } = jwt.verify(accessToken, process.env.SECRECT_KEY, {

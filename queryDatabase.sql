@@ -17,17 +17,18 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255),
     name VARCHAR(50) NOT NULL,
-    birthday DATETIME NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    address VARCHAR(50) NOT NULL,
-    role VARCHAR(20) NOT NULL,
+    birthday DATE,
+    phone VARCHAR(20),
+    address text,
+    avatar_url text,
+    role INT DEFAULT 0,
+    rf_token varchar(200),
     create_at DATETIME,
     update_at DATETIME,
     PRIMARY KEY (_id)
   ) ENGINE = MyISAM AUTO_INCREMENT = 1;
-
 
 -- CATEGORIES
 DROP TABLE IF EXISTS categories;

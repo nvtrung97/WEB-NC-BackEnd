@@ -1,42 +1,32 @@
 const db = require('../utils/db');
-
+const tbName = 'users';
+const idField = "_id";
 module.exports = {
-  all() {
-    return db('users');
-  },
-
-  async single(id) {
-    const users = await db('users').where('id', id);
-    if (users.length === 0) {
-      return null;
+    findByUserId: async userId => {
+        return db(tbName).where(idField, userId)
+            .then((response) => {
+                return response;
+            });
+    },
+    updateByUserId: async (entity, userId) => {
+        return db(tbName).where(idField, '=', userId)
+            .returning([idField])
+            .update(entity)
+            .then((response) => {
+                return response;
+            });
+    },
+    create: async entity => {
+        return db(tbName).insert(entity)
+            .returning([idField])
+            .then((response) => {
+                return response;
+            });
+    },
+    findByEmail: async email => {
+        return db(tbName).where('email', email)
+            .then((response) => {
+                return response;
+            });
     }
-
-    return users[0];
-  },
-
-  async singleByUserName(username) {
-    const users = await db('users').where('username', username);
-    if (users.length === 0) {
-      return null;
-    }
-
-    return users[0];
-  },
-
-  add(user) {
-    return db('users').insert(user);
-  },
-
-  patchRFToken(id, rfToken) {
-    return db('users').where('id', id).update('rfToken', rfToken);
-  },
-
-  async isValidRFToken(id, rfToken) {
-    const list = await db('users').where('id', id).andWhere('rfToken', rfToken);
-    if (list.length > 0) {
-      return true;
-    }
-
-    return false;
-  }
-};
+}
