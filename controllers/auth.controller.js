@@ -11,7 +11,9 @@ module.exports = {
             // xử lí login tài khoản mật khẩu bình thường
         } else if (req.body.login_type == 'google') {
             // xử lí đăng nhập gg google
-            client.verifyIdToken({ idToken: req.body.token_id, audience: process.env.GOOGLE_AUTH_CLIENT_ID }).catch(() => { return Response.error(res, 'login failed', 405); }).then(async (response) => {
+            client.verifyIdToken({ idToken: req.body.token_id, audience: process.env.GOOGLE_AUTH_CLIENT_ID }).catch(() => {
+                return res.status(405).send({ message: 'login failed' })
+            }).then(async (response) => {
                 let users = userModel.findByEmail(response.payload.email);
                 let dataUserResponse = { user_id: 0, full_name: esponse.payload.name, email: response.payload.email, avatar_url: esponse.payload.picture };
                 let refreshToken = uuid.v4();
@@ -25,9 +27,9 @@ module.exports = {
                     }
                     let newUser = await userModel.create(entity);
                     dataUserResponse.user_id = newUser[0]._id;
-                } else { 
-                    dataUserResponse.user_id = users[0]._id; 
-                    await userModel.updateByUserId({rf_token: refreshToken},users[0]._id)
+                } else {
+                    dataUserResponse.user_id = users[0]._id;
+                    await userModel.updateByUserId({ rf_token: refreshToken }, users[0]._id)
                 }
                 let token = jwt.generateToken(dataUserResponse.user_id, 864000);
                 return res.status(201).send({ accessToken: token, refreshToken: refreshToken, user: dataUserResponse });
