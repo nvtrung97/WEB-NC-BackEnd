@@ -37,7 +37,6 @@ module.exports = {
                         rf_token: refreshToken
                     }
                     let newUser = await userModel.create(entity);
-                    console.log('new_user', newUser);
                     dataUserResponse.user_id = newUser[0]._id;
                 } else {
                     dataUserResponse.user_id = users[0]._id;
