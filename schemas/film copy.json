@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "required": [
+		"title",
+		"description",
+		"release_year",
+		"language_id",
+		"original_language_id",
+		"rental_duration",
+		"rental_rate",
+		"length",
+		"replacement_cost",
+		"rating",
+		"special_features"
+	],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"release_year": {
+			"type": "integer",
+			"default": 0
+		},
+		"language_id": {
+			"type": "integer",
+			"default": 0
+		},
+		"original_language_id": {
+			"type": "integer",
+			"default": null
+		},
+		"rental_duration": {
+			"type": "integer",
+			"default": 0
+		},
+		"rental_rate": {
+			"type": "string",
+			"default": ""
+		},
+		"length": {
+			"type": "integer",
+			"default": 0
+		},
+		"replacement_cost": {
+			"type": "string",
+			"default": ""
+		},
+		"rating": { 
+			"type": "string",
+			"default": ""
+		},
+		"special_features": {
+			"type": "string",
+			"default": ""
+		}
+  }
+}

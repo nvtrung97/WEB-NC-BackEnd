@@ -6,8 +6,9 @@
  Source Schema         : academy
 
 */
-create database academy CHARACTER SET utf8 COLLATE utf8_general_ci;
-use academy;
+DROP DATABASE IF EXISTS users;
+CREATE DATABASE academy CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE academy;
 SET FOREIGN_KEY_CHECKS = 0;
 
 
@@ -28,6 +29,22 @@ CREATE TABLE users (
     PRIMARY KEY (_id)
   ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
+
+-- TOKENS
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    birthday DATETIME NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    address VARCHAR(50) NOT NULL,
+    role VARCHAR(20) NOT NULL,
+    create_at DATETIME,
+    update_at DATETIME,
+    PRIMARY KEY (_id)
+  ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
 -- CATEGORIES
 DROP TABLE IF EXISTS categories;
