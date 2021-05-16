@@ -8,7 +8,7 @@ module.exports = {
                 email: auth.email,
                 role: auth.role
             },
-            process.env.SECRECT_KEY_JWT,
+            process.env.SECRECT_KEY,
             {
                 algorithm: "HS256",
                 expiresIn: expires
@@ -18,7 +18,7 @@ module.exports = {
 
     verifyToken(token) {
         return new Promise((resolve, reject) => {
-            jwt.verify(token, process.env.SECRECT_KEY_JWT, (error, decoded) => {
+            jwt.verify(token, process.env.SECRECT_KEY, (error, decoded) => {
                 if (error) {
                     return reject(error);
                 }

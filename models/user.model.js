@@ -1,30 +1,41 @@
 const db = require('../utils/database.util');
 
 module.exports = {
-  all() {
+
+  save(user) {
+    return db('users').insert(user);
+  },
+
+  findAll() {
     return db('users');
   },
 
-  async single(id) {
-    const users = await db('users').where('id', id);
+  async findById(id) {
+    const users = await db('users').where('_id', id);
     if (users.length === 0) {
       return null;
     }
-
     return users[0];
   },
 
-  async singleByUserName(username) {
-    const users = await db('users').where('username', username);
+  async findByEmail(email) {
+    const users = await db('users').where('email', email);
     if (users.length === 0) {
       return null;
     }
-
     return users[0];
   },
 
-  add(user) {
-    return db('users').insert(user);
+  updateById(id, data) {
+    return db('film')
+      .where('film_id', id)
+      .update(data);
+  },
+
+  deleteById(id) {
+    return db('film')
+      .where('film_id', id)
+      .delete();
   },
 
   patchRFToken(id, rfToken) {

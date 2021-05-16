@@ -17,7 +17,7 @@ module.exports = {
                 );
             }
         } else {
-            return res.status(403).send(
+            return res.status(403).json(
                 {
                     message: 'Token not found.',
                 }

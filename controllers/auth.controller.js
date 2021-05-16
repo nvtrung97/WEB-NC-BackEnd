@@ -1,40 +1,49 @@
-const userModel = require('../models/film.model');
+const userModel = require('../models/user.model');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
-    async findAll(req, res) {
-        const list = await filmModel.findAll();
-        res.json(list);
-    },
-
-    async save(req, res) {
-        const film = req.body;
-        const ids = await filmModel.save(film);
-        film.film_id = ids[0];
-        res.status(201).json(film);
-    },
-
-    async findById(req, res) {
-        const id = req.params.id || 0;
-        const film = await filmModel.findById(id);
-        if (film === null) {
-            return res.status(204).end();
+    async signup(req, res) {
+        req.body.password = bcrypt.hashSync(req.body.password, 5);
+        const user = req.body;
+        const userCheck = await userModel.findByEmail(user.email);
+        if (userCheck != null) {
+            res.status(400).json({
+                message: 'Sign up error. Email already exists.'
+            });
+        } else {
+            const id = await userModel.save(user);
+            res.status(201).json({
+                message: 'Sign up success.'
+            });
         }
-        res.json(film);
     },
 
-    async updateById(req, res) {
-        const id = req.params.id || 0;
-        filmModel.updateById(id, req.body)
-            .then(() => {
-                res.status(204).end();
+    async signin(req, res) {
+        if (req.body.username && req.body.password) {
+            const userCheck = await userModel.findByEmail(user.email);
+            if (userCheck != null) {
+                const result = bcrypt.compareSync(req.body.password, userCheck.password);
+                if (result) {
+                    const auth = { email: userCheck.email, role: userCheck.role };
+                    var token = await jwt.generateToken(auth, '5d');
+                    res.status(200).json({
+                        message: 'Sign in success.',
+                        token: token
+                    });
+                } else {
+                    res.status(400).json({
+                        message: 'Sign in error. Email or Password incorrect.',
+                    });
+                }
+            } else {
+                res.status(400).json({
+                    message: 'Sign in error. Email does not exist.',
+                });
+            }
+        } else {
+            res.status(400).json({
+                message: 'Sign in error. Email or Password null.',
             });
-    },
-
-    async deleteById(req, res) {
-        const id = req.params.id || 0;
-        filmModel.deleteById(id)
-            .then(() => {
-                res.status(204).end();
-            });
+        }
     }
 }

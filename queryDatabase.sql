@@ -6,9 +6,8 @@
  Source Schema         : academy
 
 */
-DROP DATABASE IF EXISTS users;
-CREATE DATABASE academy CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE academy;
+create database academy CHARACTER SET utf8 COLLATE utf8_general_ci;
+use academy;
 SET FOREIGN_KEY_CHECKS = 0;
 
 
@@ -19,30 +18,15 @@ CREATE TABLE users (
     _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    birthday DATETIME NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    address VARCHAR(50) NOT NULL,
-    role VARCHAR(20) NOT NULL,
-    create_at DATETIME,
-    update_at DATETIME,
-    PRIMARY KEY (_id)
-  ) ENGINE = MyISAM AUTO_INCREMENT = 1;
-
-
--- TOKENS
-DROP TABLE IF EXISTS users;
-CREATE TABLE users (
-    _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    birthday DATETIME NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    address VARCHAR(50) NOT NULL,
-    role VARCHAR(20) NOT NULL,
-    create_at DATETIME,
-    update_at DATETIME,
+    name VARCHAR(50) DEFAULT 'user name',
+    birthday DATE,
+    phone VARCHAR(20),
+    address text,
+    avatar_url text,
+    role INT DEFAULT 0,
+    rf_token varchar(200),
+    create_at DATETIME DEFAULT NOW(),
+    update_at DATETIME DEFAULT NOW(),
     PRIMARY KEY (_id)
   ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
@@ -50,9 +34,9 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories  (
   _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(50) NOT NULL,
-  create_at DATETIME,
-  update_at DATETIME,
+  name VARCHAR(50) NOT NULL DEFAULT 'category name',
+  create_at DATETIME DEFAULT NOW(),
+  update_at DATETIME DEFAULT NOW(),
   PRIMARY KEY (_id)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
@@ -61,18 +45,18 @@ CREATE TABLE categories  (
 DROP TABLE IF EXISTS products;
 CREATE TABLE products  (
   _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255)NOT NULL,
+  name VARCHAR(255)NOT NULL DEFAULT 'category name',
   user_id INT(11) NOT NULL,
   category_id INT(11) NOT NULL,
   url_image VARCHAR(255),
   short_description VARCHAR(100),
   full_description text,
   status VARCHAR(30) NOT NULL,
-  score INT NOT NULL,
-  number_reviews INT NOT NULL,
-  number_students INT NOT NULL,
-  create_at DATETIME,
-  update_at DATETIME,
+  score INT NOT NULL DEFAULT 0,
+  number_reviews INT NOT NULL DEFAULT 0,
+  number_students INT NOT NULL DEFAULT 0,
+  create_at DATETIME DEFAULT NOW(),
+  update_at DATETIME DEFAULT NOW(),
   PRIMARY KEY (_id)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
@@ -81,14 +65,14 @@ CREATE TABLE products  (
 DROP TABLE IF EXISTS videos;
 CREATE TABLE videos  (
   _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL DEFAULT 'video name',
   user_id INT(11) NOT NULL,
   product_id INT(11) NOT NULL,
-  chap_number INT NOT NULL,
+  chap_number INT NOT NULL DEFAULT 0,
   url text,
   description text,
-  create_at DATETIME,
-  update_at DATETIME,
+  create_at DATETIME DEFAULT NOW(),
+  update_at DATETIME DEFAULT NOW(),
   PRIMARY KEY (_id)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
@@ -101,8 +85,8 @@ CREATE TABLE reviews  (
   product_id INT(11) NOT NULL,
   content VARCHAR(255) NOT NULL,
   score INT NOT NULL,
-  create_at DATETIME,
-  update_at DATETIME,
+  create_at DATETIME DEFAULT NOW(),
+  update_at DATETIME DEFAULT NOW(),
   PRIMARY KEY (_id)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
@@ -113,8 +97,8 @@ CREATE TABLE watch_lists  (
   _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id INT(11) NOT NULL,
   product_id INT(11) NOT NULL,
-  create_at DATETIME,
-  update_at DATETIME,
+  create_at DATETIME DEFAULT NOW(),
+  update_at DATETIME DEFAULT NOW(),
   PRIMARY KEY (_id)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
@@ -126,8 +110,8 @@ CREATE TABLE registered_lists  (
   user_id INT(11) NOT NULL,
   product_id INT(11) NOT NULL,
   video_pause_id INT(11),
-  create_at DATETIME,
-  update_at DATETIME,
+  create_at DATETIME DEFAULT NOW(),
+  update_at DATETIME DEFAULT NOW(),
   PRIMARY KEY (_id)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
 
