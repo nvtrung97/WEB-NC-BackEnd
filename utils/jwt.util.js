@@ -1,9 +1,9 @@
 var jwt = require('jsonwebtoken');
 
 module.exports = {
-    generateToken(_id, expires) {
+    generateToken(auth, expires) {
         return jwt.sign({
-            id: _id
+            auth: auth
         }, process.env.SECRECT_KEY,
             {
                 expiresIn: expires

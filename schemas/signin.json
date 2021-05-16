@@ -1,7 +1,7 @@
 {
     "required": [
       "login_type",
-      "username",
+      "email",
       "password",
       "token_id"
     ],
@@ -11,7 +11,7 @@
       "login_type": {
         "type": "string"
       },
-      "username": {
+      "email": {
         "type": "string"
       },
       "password": {

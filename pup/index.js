@@ -1,7 +1,5 @@
-let fs = require('fs');
 var request = require('request');
 (async () => {
-
     request('https://drive.google.com/drive/folders/0B4fU5__VXkIkdGZzdk5qMWFSVjg', function (error, response, body) {
         if (!error && response.statusCode == 200) {
           //  console.log(response);

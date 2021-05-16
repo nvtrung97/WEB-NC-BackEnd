@@ -14,6 +14,7 @@ module.exports = function () {
         process.env.PORT = 5006;
         return;
     }
+    process.env.NODE_ENV = 'localy';
     process.env.URL = 'http://localhost:3003';
     process.env.PORT = 3006;
 };  

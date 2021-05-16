@@ -1,4 +1,4 @@
-const db = require('../utils/db');
+const db = require('../utils/db.util');
 const tbName = 'users';
 const idField = "_id";
 module.exports = {
@@ -27,6 +27,15 @@ module.exports = {
         return db(tbName).where('email', email)
             .then((response) => {
                 return response;
+            });
+    },
+    isValidRFToken: async (user_id, rf_token) => {
+        return db(tbName)
+            .where('_id', user_id)
+            .andWhere('rf_token', rf_token)
+            .then((response) => {
+                if(response.length == 0) return false;
+                return true;
             });
     }
 }

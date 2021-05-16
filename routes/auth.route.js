@@ -1,16 +1,18 @@
 var express = require('express');
 var router = express.Router();
+let jwt = require('../middlewares/auth.mdw');
 let authController = require('../controllers/auth.controller');
 const schemaRefresh = require('../schemas/refreshToken.json');
-const schemaLogin = require('../schemas/login.json');
-router.post('/api/v1/login', require('../middlewares/validate.mdw')(schemaLogin), async (req, res, next) => {
-  authController.login(req, res, next).catch((error) => next(error));
+const schemaSignin = require('../schemas/signin.json');
+const schemaSignup = require('../schemas/signup.json');
+
+router.post('/signin', require('../middlewares/validate.mdw')(schemaSignin), async (req, res, next) => {
+  authController.signin(req, res).catch((error) => next(error));
 });
-router.get('/signup', async (req, res, next) => {
+router.post('/signup', require('../middlewares/validate.mdw')(schemaSignup), async (req, res, next) => {
   authController.signup(req, res, next).catch((error) => next(error));
 });
-router.post('/api/v1/refresh', require('../middlewares/validate.mdw')(schemaRefresh), async (req, res, next) => {
+router.post('/refresh', require('../middlewares/validate.mdw')(schemaRefresh), jwt.verifyTokenExpiration, async (req, res, next) => {
   authController.refresh(req, res, next).catch((error) => { next(error) });
 });
 module.exports = router;
-

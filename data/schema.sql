@@ -18,7 +18,7 @@ CREATE TABLE users (
     _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    name VARCHAR(50) DEFAULT 'user name',
+    full_name VARCHAR(50) DEFAULT 'user name',
     birthday DATE,
     phone VARCHAR(20),
     address text,
