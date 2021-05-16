@@ -1,6 +1,7 @@
 const express = require('express');
-const morgan = require('morgan');
+require('dotenv').config();
 require('express-async-errors');
+const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 new (require('./config/env'));
@@ -25,4 +26,4 @@ app.use(function (err, req, res, next) {
 console.log(`Running ${process.env.NODE_ENV}`);
 app.listen(process.env.PORT || 3006, function () {
   console.log(`Sakila api is running at http://localhost:${process.env.PORT || 3006}`);
-})
+});

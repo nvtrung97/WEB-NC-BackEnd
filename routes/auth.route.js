@@ -13,3 +13,4 @@ router.post('/api/v1/refresh', require('../middlewares/validate.mdw')(schemaRefr
   authController.refresh(req, res, next).catch((error) => { next(error) });
 });
 module.exports = router;
+

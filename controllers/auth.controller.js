@@ -9,7 +9,9 @@ module.exports = {
     login: async (req, res, next) => {
         if (req.body.login_type == 'auth') {
             // xử lí login tài khoản mật khẩu bình thường
+
         } else if (req.body.login_type == 'google') {
+            
             // xử lí đăng nhập gg google
             client.verifyIdToken({ idToken: req.body.token_id, audience: process.env.GOOGLE_AUTH_CLIENT_ID }).catch(() => {
                 return res.status(405).send({ message: 'login failed' })
