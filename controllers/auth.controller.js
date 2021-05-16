@@ -1,26 +1,32 @@
 const userModel = require('../models/user.model');
 const bcrypt = require('bcryptjs');
-
+const jwt = require('../utils/jwt.util');
 module.exports = {
     async signup(req, res) {
-        req.body.password = bcrypt.hashSync(req.body.password, 5);
-        const user = req.body;
-        const userCheck = await userModel.findByEmail(user.email);
-        if (userCheck != null) {
-            res.status(400).json({
-                message: 'Sign up error. Email already exists.'
-            });
+        if (req.body.email && req.body.password) {
+            req.body.password = bcrypt.hashSync(req.body.password, 5);
+            const user = req.body;
+            const userCheck = await userModel.findByEmail(user.email);
+            if (userCheck != null) {
+                res.status(400).json({
+                    message: 'Sign up error. Email already exists.'
+                });
+            } else {
+                const id = await userModel.save(user);
+                res.status(201).json({
+                    message: 'Sign up success.'
+                });
+            }
         } else {
-            const id = await userModel.save(user);
-            res.status(201).json({
-                message: 'Sign up success.'
+            res.status(400).json({
+                message: 'Sign up error. Email or Password null.',
             });
         }
     },
 
     async signin(req, res) {
-        if (req.body.username && req.body.password) {
-            const userCheck = await userModel.findByEmail(user.email);
+        if (req.body.email && req.body.password) {
+            const userCheck = await userModel.findByEmail(req.body.email);
             if (userCheck != null) {
                 const result = bcrypt.compareSync(req.body.password, userCheck.password);
                 if (result) {
@@ -32,7 +38,7 @@ module.exports = {
                     });
                 } else {
                     res.status(400).json({
-                        message: 'Sign in error. Email or Password incorrect.',
+                        message: 'Sign in error. Password incorrect.',
                     });
                 }
             } else {
