@@ -16,6 +16,14 @@ module.exports = {
                 return response;
             });
     },
+    updateByEmail: async (entity, email) => {
+        return db(tbName).where('email', '=', email)
+            .returning('email')
+            .update(entity)
+            .then((response) => {
+                return response;
+            });
+    },
     create: async entity => {
         return db(tbName).insert(entity)
             .returning([idField])
