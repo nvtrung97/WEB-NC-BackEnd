@@ -1,0 +1,12 @@
+{
+    "required": [
+      "otp"
+    ],
+    "additionalProperties": false,
+    "type":"object",
+    "properties": {
+      "otp": {
+        "type": "string"
+      }
+    }
+}
