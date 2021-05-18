@@ -1,32 +1,29 @@
 # WEB-NC-BackEnd
 ## Installation
-Task-Manager-Server require **Node.js >= 10** to execute.
+ require **Node.js >= 10** to execute.
 1. Clone the project.
-
+WEB-NC-BackEnd
 ```
 git clone 
-need fix 
 ```
 2. Install the dependencies.
 ```
-cd task-manager-server
+cd WEB-NC-BackEnd
 npm install 
 ```
 
-3. Start the development server.
-
+3. Start:
 ```
-npm run dev
-
-
+Develop: npm run dev
+```
+```
+Production: npm start
+```
+```
+Testing: npm start:test
+```
 ## License
 
-Copyright 2018-present NEM
+Copyright 2021-present
 
 Licensed under the [Apache License 2.0](LICENSE)
-
-[self]:  https://gitlab.com/eaglob/task-manager-server
-[docs]: https://eaglob.com
-[issues]: https://gitlab.com/eaglob/task-manager-server/issues
-[heroku]: https://taskmanagementeaglobdemo.herokuapp.com/
-

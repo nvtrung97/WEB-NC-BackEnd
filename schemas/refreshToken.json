@@ -1,0 +1,12 @@
+{
+    "required": [
+      "refreshToken"
+    ],
+    "additionalProperties": false,
+    "type":"object",
+    "properties": {
+      "refreshToken": {
+        "type": "string"
+      }
+    }
+}
