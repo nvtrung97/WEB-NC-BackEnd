@@ -15,7 +15,7 @@
 #### Get category
 
 ```http
-  GET /api/items/${id}
+  GET /api/v1/category/${_id}
 ```
 
 | Parameter | Type     | Description                       |
