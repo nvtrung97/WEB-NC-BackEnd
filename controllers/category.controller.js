@@ -36,5 +36,11 @@ module.exports = {
             .then(() => {
                 res.status(204).end();
             });
+    },
+
+    async mostRegisted(req, res) {
+        const limit = req.query.limit || 3;
+        var list = await categoryModel.getMostRegisted(limit);
+        res.json(list);
     }
 }

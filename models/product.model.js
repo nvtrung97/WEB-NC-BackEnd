@@ -31,22 +31,33 @@ module.exports = {
       .delete();
   },
   //top product hot của tuần
-  getProductOfWeek(limit) {
-    const query = `select p._id, count(r.product_id) as count, p.name, p.user_id, p.category_id, p.url_image
-                    from webncdb.products p
-                    left join webncdb.registered_lists r
-                    on r.product_id = p._id and datediff(now(), r.create_at) < 7
-                    group by p._id
-                    order by count desc
-                    limit ` + limit;
+  getHighlightOfWeek(limit) {
+    const query =
+      `select p._id, count(r.product_id) as count, p.name, p.user_id, p.category_id, p.url_image
+      from webncdb.products p
+      left join webncdb.registered_lists r
+      on r.product_id = p._id and datediff(now(), r.create_at) < 7
+      group by p._id
+      having count > 0
+      order by count desc
+      limit ` + limit;
     return db.raw(query).then((results) => results[0])
   },
   //top product view cao
-  getProductOfView(limit) {
-    const query = `select p._id, p.name, p.user_id, p.category_id, p.url_image, p.number_students as number_views
-                    from webncdb.products p
-                    order by number_views desc
-                    limit ` + limit;
+  getMostOfView(limit) {
+    const query =
+      `select p._id, p.name, p.user_id, p.category_id, p.url_image, p.number_students as number_views
+      from webncdb.products p
+      order by number_views desc
+      limit ` + limit;
+    return db.raw(query).then((results) => results[0])
+  },
+  getLastestProduct(limit) {
+    const query =
+      `select p._id, p.name, p.user_id, p.category_id, p.url_image, p.create_at
+      from webncdb.products p
+      order by p.create_at desc
+      limit ` + limit;
     return db.raw(query).then((results) => results[0])
   }
 };

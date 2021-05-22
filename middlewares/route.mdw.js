@@ -1,7 +1,7 @@
 
 module.exports = (app) => {
     app.use('/api/v1/auth', require('../routes/auth.route'));
-    app.use('/api/v1/category', require('../routes/category.route'));
-    app.use('/api/v1/home', require('../routes/home.route'));
+    app.use('/api/v1/categories', require('../routes/category.route'));
+    app.use('/api/v1/products', require('../routes/product.route'));
     // app.use('/api/v1/users', require('../routes/user.route'));
 };

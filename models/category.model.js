@@ -29,5 +29,23 @@ module.exports = {
     return db('categories')
       .where('_id', id)
       .delete();
+  },
+
+  getMostRegisted(limit) {
+    const query =
+      `select c._id, c.name, result.count
+      from webncdb.categories c,
+        (select p.category_id, count(r.product_id) as count
+        from webncdb.products p
+        left join webncdb.registered_lists r
+        on r.product_id = p._id and datediff(now(), r.create_at) < 7
+        group by p.category_id
+        having count > 0)
+        as result
+      where c._id = result.category_id
+      order by result.count desc
+      limit ` + limit;
+    return db.raw(query).then((results) => results[0])
   }
+
 };
