@@ -1,4 +1,6 @@
 const productModel = require('../models/product.model');
+const userModel = require('../models/user.model');
+
 
 module.exports = {
 
@@ -22,6 +24,13 @@ module.exports = {
         res.json(list);
     },
 
+    async mostOfCategory(req, res) {
+        const limit = req.query.limit || 5;
+        const categoryId = req.query.category || 0;
+        var list = await productModel.getMostOfCategory(categoryId, limit);
+        res.json(list);
+    },
+
     async latestProduct(req, res) {
         const limit = req.query.limit || 10;
         var list = await productModel.getLastestProduct(limit);
@@ -36,5 +45,12 @@ module.exports = {
         const order = req.query.order || 'desc';
         var list = await productModel.searchProduct(keyword, type, limit, page, order);
         res.json(list);
+    },
+
+    async detailProduct(req, res) {
+        const id = req.params.id || 0;
+        var product = await productModel.findById(id);
+        // res.json({ ...product, author: user });
+        res.json(product);
     }
 }

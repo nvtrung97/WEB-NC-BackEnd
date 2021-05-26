@@ -14,6 +14,10 @@ router.route('/most-of-view')
     .get(async (req, res) => {
         productController.mostOfView(req, res);
     });
+router.route('/most-of-category')
+    .get(async (req, res) => {
+        productController.mostOfCategory(req, res);
+    });
 router.route('/lastest')
     .get(async (req, res) => {
         productController.latestProduct(req, res);
@@ -22,9 +26,8 @@ router.route('/search')
     .get(async (req, res) => {
         productController.searchProduct(req, res);
     });
-
-// router.route('/:id')
-//     .get(async (req, res) => {
-//         categoryController.findById(req, res)
-//     });
+router.route('/:id')
+    .get(async (req, res) => {
+        productController.detailProduct(req, res)
+    });
 module.exports = router;

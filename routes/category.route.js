@@ -12,11 +12,6 @@ router.route('/most-registed')
     .get(async (req, res) => {
         categoryController.mostRegisted(req, res);
     });
-router.route('/m2')
-    .get(async (req, res) => {
-        console.log("m2");
-        // categoryController.findAll(req, res)
-    });
 router.route('/:id')
     .get(async (req, res) => {
         console.log("id");

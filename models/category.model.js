@@ -11,12 +11,14 @@ module.exports = {
   },
 
   async findById(id) {
-    const categories = await db('categories')
-      .where('_id', id);
-    if (categories.length === 0) {
-      return null;
-    }
-    return categories[0];
+    return db('categories')
+      .where('_id', id)
+      .then((categories) => {
+        if (categories.length === 0) {
+          return null;
+        }
+        return categories[0];
+      })
   },
 
   updateById(id, data) {
@@ -30,7 +32,7 @@ module.exports = {
       .where('_id', id)
       .delete();
   },
-
+  //custom
   getMostRegisted(limit) {
     const query =
       `select c._id, c.name, result.count
