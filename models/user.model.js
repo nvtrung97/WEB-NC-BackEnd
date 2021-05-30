@@ -37,6 +37,12 @@ module.exports = {
                 return response;
             });
     },
+    findAll: async () => {
+        return db(tbName)
+            .then((response) => {
+                return response;
+            });
+    },
     isValidRFToken: async (user_id, rf_token) => {
         return db(tbName)
             .where('_id', user_id)

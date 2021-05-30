@@ -29,7 +29,7 @@ class App extends Component {
     };
 
     facebookResponse = (response) => {
-
+console.log(response);
     };
 
     googleResponse = (response) => {
@@ -64,7 +64,7 @@ class App extends Component {
                         onFailure={this.onFailure} onSuccess={this.twitterResponse}
                         requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse" />
                     <FacebookLogin
-                        appId=''
+                        appId='479068386664437'
                         autoLoad={false}
                         fields="name,email,picture"
                         callback={this.facebookResponse} />

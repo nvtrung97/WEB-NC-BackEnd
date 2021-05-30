@@ -13,7 +13,7 @@ module.exports = {
     signin: async (req, res) => {
         if (req.body.login_type == 'auth') {
             // xử lí login tài khoản mật khẩu bình thường 
-            const user = await userModel.findByEmail(req.body.email);
+            const user = await userModel.findAll(req.body.email);
             if (user.length == 0 || (user.length != 0 && user.email_confirmed == false) ) return res.status(400).json({ message: 'Sign in error. Email does not exist.', });
             if (bcrypt.compareSync(req.body.password, user[0].password)) {
                 const auth = { user_id: user[0]._id, role: user[0].role };
@@ -56,9 +56,10 @@ module.exports = {
 
     signup: async (req, res, next) => {
         let user = await userModel.findByEmail(req.body.email);
+        console.log(user);
         req.body.password = bcrypt.hashSync(req.body.password, Number(process.env.KEY_PASSWORD));
         if (user.length != 0) {
-            if (user.email_confirmed)
+            if (user[0].email_confirmed)
                 return res.status(400).json({ message: 'Sign up error. Email already exists.', });
             else
                 await userModel.updateByUserId(req.body, user[0]._id);
