@@ -5,7 +5,7 @@ const userModel = require('../models/user.model');
 module.exports = {
 
     async productOfCategory(req, res) {
-        const categoryId = req.query.category || 0;
+        const categoryId = req.query.category_id || 0;
         const limit = req.query.limit || 12;
         const page = req.query.page || 1;
         var list = await productModel.getProductOfCategory(categoryId, limit, page);
@@ -26,7 +26,7 @@ module.exports = {
 
     async mostOfCategory(req, res) {
         const limit = req.query.limit || 5;
-        const categoryId = req.query.category || 0;
+        const categoryId = req.query.category_id || 0;
         var list = await productModel.getMostOfCategory(categoryId, limit);
         res.json(list);
     },
