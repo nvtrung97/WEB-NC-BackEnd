@@ -13,8 +13,10 @@ module.exports = {
     signin: async (req, res) => {
         if (req.body.login_type == 'auth') {
             // xử lí login tài khoản mật khẩu bình thường 
-            const user = await userModel.findAll(req.body.email);
-            if (user.length == 0 || (user.length != 0 && user.email_confirmed == false) ) return res.status(400).json({ message: 'Sign in error. Email does not exist.', });
+
+            const user = await userModel.findByEmail(req.body.email);
+            if (user.length == 0) return res.status(400).json({ message: 'Sign in error. Email does not exist.', });
+            if((user.length != 0 && user[0].email_confirmed == false)) return res.status(400).json({ message: 'Sign in error. Email does not exist.', });
             if (bcrypt.compareSync(req.body.password, user[0].password)) {
                 const auth = { user_id: user[0]._id, role: user[0].role };
                 let token = jwt.generateToken(auth, '3d');
@@ -85,9 +87,9 @@ module.exports = {
     verifyOTP: async (req, res, next) => {
         let { email, OTP_hash } = req.user;
         if (bcrypt.compareSync(req.body.otp, OTP_hash)) {
-            await userModel.updateByEmail({email_confirmed: true}, email);
-            return res.status(201).json({message: 'Successful account registration.'});
-        }  else
-        return res.status(404).json({message: 'Wrong OTP'});
+            await userModel.updateByEmail({ email_confirmed: true }, email);
+            return res.status(201).json({ message: 'Successful account registration.' });
+        } else
+            return res.status(404).json({ message: 'Wrong OTP' });
     }
 }

@@ -1,5 +1,5 @@
-var otpGenerator = require('otp-generator')
-
-let a = otpGenerator.generate(6, { alphabets: true });
-
-console.log(a);
+let test = require('./drive.service');
+(async () => {
+   let a = await test.getData('https://drive.google.com/drive/folders/1MtGpuPiXU-N_L7phYrOC9nNLeoiIgE5u');
+   console.log(a);
+})()

@@ -64,7 +64,6 @@ DROP TABLE IF EXISTS videos;
 CREATE TABLE videos  (
   _id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL DEFAULT 'video name',
-  user_id INT(11) NOT NULL,
   product_id INT(11) NOT NULL,
   chap_number INT NOT NULL DEFAULT 0,
   url text,

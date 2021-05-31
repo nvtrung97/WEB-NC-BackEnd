@@ -2,11 +2,16 @@ const db = require('../utils/db.util');
 const tbName = 'users';
 const idField = "_id";
 module.exports = {
+
     findByUserId: async userId => {
-        return db(tbName).where(idField, userId)
-            .then((response) => {
-                return response;
-            });
+        return db(tbName)
+            .where(idField, userId)
+            .then((users) => {
+                if (users.length === 0) {
+                    return null;
+                }
+                return users[0];
+            })
     },
     updateByUserId: async (entity, userId) => {
         return db(tbName).where(idField, '=', userId)
@@ -48,8 +53,9 @@ module.exports = {
             .where('_id', user_id)
             .andWhere('rf_token', rf_token)
             .then((response) => {
-                if(response.length == 0) return false;
+                if (response.length == 0) return false;
                 return true;
             });
-    }
+    },
+
 }
