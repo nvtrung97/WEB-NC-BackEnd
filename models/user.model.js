@@ -1,11 +1,18 @@
 const db = require('../utils/db.util');
-const tbName = 'users';
-const idField = "_id";
 module.exports = {
 
-    findByUserId: async userId => {
-        return db(tbName)
-            .where(idField, userId)
+    save(user) {
+        return db('users')
+            .insert(user);
+    },
+
+    findAll() {
+        return db('users');
+    },
+
+    findById(id) {
+        return db('users')
+            .where('_id', id)
             .then((users) => {
                 if (users.length === 0) {
                     return null;
@@ -13,43 +20,34 @@ module.exports = {
                 return users[0];
             })
     },
-    updateByUserId: async (entity, userId) => {
-        return db(tbName).where(idField, '=', userId)
-            .returning([idField])
-            .update(entity)
-            .then((response) => {
-                return response;
+
+    findByEmail(email) {
+        return db('users').where('email', email)
+            .then((users) => {
+                return users;
             });
     },
-    updateByEmail: async (entity, email) => {
-        return db(tbName).where('email', '=', email)
+
+    updateById(id, data) {
+        return db('users')
+            .where('_id', id)
+            .update(data);
+    },
+
+    deleteById(id) {
+        return db('users')
+            .where('_id', id)
+            .delete();
+    },
+
+    updateByEmail(entity, email) {
+        return db('users').where('email', '=', email)
             .returning('email')
             .update(entity)
-            .then((response) => {
-                return response;
-            });
     },
-    create: async entity => {
-        return db(tbName).insert(entity)
-            .returning([idField])
-            .then((response) => {
-                return response;
-            });
-    },
-    findByEmail: async email => {
-        return db(tbName).where('email', email)
-            .then((response) => {
-                return response;
-            });
-    },
-    findAll: async () => {
-        return db(tbName)
-            .then((response) => {
-                return response;
-            });
-    },
+
     isValidRFToken: async (user_id, rf_token) => {
-        return db(tbName)
+        return db('users')
             .where('_id', user_id)
             .andWhere('rf_token', rf_token)
             .then((response) => {

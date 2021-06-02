@@ -10,7 +10,7 @@ module.exports = {
     return db('categories');
   },
 
-  async findById(id) {
+  findById(id) {
     return db('categories')
       .where('_id', id)
       .then((categories) => {

@@ -4,6 +4,43 @@ const userModel = require('../models/user.model');
 
 module.exports = {
 
+    async findAll(req, res) {
+        const list = await productModel.findAll();
+        res.json(list);
+    },
+
+    async save(req, res) {
+        const product = req.body;
+        const ids = await productModel.save(product);
+        product._id = ids[0];
+        res.status(201).json(product);
+    },
+
+    async findById(req, res) {
+        const id = req.params.id || 0;
+        const product = await productModel.findById(id);
+        if (product === null) {
+            return res.status(204).end();
+        }
+        res.json(product);
+    },
+
+    async updateById(req, res) {
+        const id = req.params.id || 0;
+        productModel.updateById(id, req.body)
+            .then(() => {
+                res.status(204).end();
+            });
+    },
+
+    async deleteById(req, res) {
+        const id = req.params.id || 0;
+        productModel.deleteById(id)
+            .then(() => {
+                res.status(204).end();
+            });
+    },
+
     async productOfCategory(req, res) {
         const categoryId = req.query.category_id || 0;
         const limit = req.query.limit || 12;

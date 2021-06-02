@@ -9,6 +9,7 @@ router.route('/')
   .post(async (req, res) => {
     userController.save(req, res);
   });
+
 router.route('/:id')
   .get(async (req, res) => {
     userController.findById(req, res);
