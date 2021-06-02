@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 module.exports = {
-    verifyToken: function (req, res, next) {
+    verifyToken(req, res, next) {
         let tokenHeader = req.header('authorization');
         if (tokenHeader != null) tokenHeader = tokenHeader.split(' ')[1];
         const tokenUri = req.params.token;
@@ -10,7 +10,10 @@ module.exports = {
                 req.user = auth;
                 next();
             } catch (err) {
-                res.status(401).json({ status: 401, message: 'message is not valid' });
+                res.status(401).json({
+                    status: 401,
+                    message: 'Token is not valid'
+                });
             }
         } else if (tokenHeader && !tokenUri) {
             try {
@@ -18,13 +21,19 @@ module.exports = {
                 req.user = auth;
                 next();
             } catch (err) {
-                res.status(401).json({ status: 401, message: 'message is not valid' });
+                res.status(401).json({
+                    status: 401,
+                    message: 'Token is not valid'
+                });
             }
         } else {
-            return res.status(401).json({ status: 401, message: 'No Token, Authorization Denied' });
+            return res.status(401).json({
+                status: 401,
+                message: 'No Token, Authorization Denied'
+            });
         }
     },
-    verifyTokenExpiration: function (req, res, next) {
+    verifyTokenExpiration(req, res, next) {
         let tokenHeader = req.header('authorization');
         if (tokenHeader != null) tokenHeader = tokenHeader.split(' ')[1];
         const tokenUri = req.params.token;
@@ -36,7 +45,10 @@ module.exports = {
                 req.user = auth;
                 next();
             } catch (err) {
-                res.status(401).json({ status: 401, message: 'message is not valid' });
+                res.status(401).json({
+                    status: 401,
+                    message: 'Token is not valid'
+                });
             }
         } else if (tokenHeader && !tokenUri) {
             try {
@@ -46,10 +58,16 @@ module.exports = {
                 req.user = auth;
                 next();
             } catch (err) {
-                res.status(401).json({ status: 401, message: 'message is not valid' });
+                res.status(401).json({
+                    status: 401,
+                    message: 'Token is not valid'
+                });
             }
         } else {
-            return res.status(401).json({ status: 401, message: 'No Token, Authorization Denied' });
+            return res.status(401).json({
+                status: 401,
+                message: 'No Token, Authorization Denied'
+            });
         }
     },
 }
