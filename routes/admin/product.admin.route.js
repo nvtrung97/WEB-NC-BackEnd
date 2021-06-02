@@ -1,23 +1,28 @@
 const express = require('express');
-const productController = require('../controllers/product.controller');
+const productController = require('../../controllers/product.controller');
 const router = express.Router();
+const schema = require('../../schemas/product.json');
 
-/* lấy danh sách product theo category_id
-query:
-    - category_id (default 0)
-    - limit (default 12)
-    - page (default 1)
- */
 router.route('/')
     .get(async (req, res) => {
-        productController.productOfCategory(req, res);
+        productController.findAll(req, res)
+    })
+
+    .post(require('../../middlewares/validate.mdw')(schema), async (req, res) => {
+        productController.save(req, res)
     });
 
-/* lấy product theo id (ví dụ ...product/1)
-param: id 
-*/
 router.route('/:id')
     .get(async (req, res) => {
-        productController.detailProduct(req, res)
+        productController.findById(req, res)
+    })
+
+    .put(async (req, res) => {
+        productController.updateById(req, res)
+    })
+
+    .delete(async (req, res) => {
+        productController.deleteById(req, res)
     });
+
 module.exports = router;

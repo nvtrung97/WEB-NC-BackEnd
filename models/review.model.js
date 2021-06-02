@@ -1,12 +1,12 @@
 const db = require('../utils/db.util');
 module.exports = {
+  findAll() {
+    return db('reviews');
+  },
+
   save(review) {
     return db('reviews')
       .insert(review);
-  },
-
-  findAll() {
-    return db('reviews');
   },
 
   findById(id) {

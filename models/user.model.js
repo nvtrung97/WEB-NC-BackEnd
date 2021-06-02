@@ -1,13 +1,12 @@
 const db = require('../utils/db.util');
 module.exports = {
+    findAll() {
+        return db('users');
+    },
 
     save(user) {
         return db('users')
             .insert(user);
-    },
-
-    findAll() {
-        return db('users');
     },
 
     findById(id) {
@@ -34,17 +33,18 @@ module.exports = {
             .update(data);
     },
 
+    updateByEmail(entity, email) {
+        return db('users').where('email', '=', email)
+            .returning('email')
+            .update(entity)
+    },
+
     deleteById(id) {
         return db('users')
             .where('_id', id)
             .delete();
     },
 
-    updateByEmail(entity, email) {
-        return db('users').where('email', '=', email)
-            .returning('email')
-            .update(entity)
-    },
 
     isValidRFToken: async (user_id, rf_token) => {
         return db('users')

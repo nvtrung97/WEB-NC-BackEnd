@@ -3,14 +3,14 @@ const categoryModel = require('../models/category.model');
 module.exports = {
     async findAll(req, res) {
         const list = await categoryModel.findAll();
-        res.json(list);
+        return res.json(list);
     },
 
     async save(req, res) {
         const category = req.body;
         const ids = await categoryModel.save(category);
         category._id = ids[0];
-        res.status(201).json(category);
+        return res.status(201).json(category);
     },
 
     async findById(req, res) {
@@ -19,14 +19,14 @@ module.exports = {
         if (category === null) {
             return res.status(204).end();
         }
-        res.json(category);
+        return res.json(category);
     },
 
     async updateById(req, res) {
         const id = req.params.id || 0;
         categoryModel.updateById(id, req.body)
             .then(() => {
-                res.status(204).end();
+                return res.status(204).end();
             });
     },
 
@@ -34,13 +34,13 @@ module.exports = {
         const id = req.params.id || 0;
         categoryModel.deleteById(id)
             .then(() => {
-                res.status(204).end();
+                return res.status(204).end();
             });
     },
 
     async mostRegisted(req, res) {
         const limit = req.query.limit || 3;
         var list = await categoryModel.getMostRegisted(limit);
-        res.json(list);
+        return res.json(list);
     }
 }

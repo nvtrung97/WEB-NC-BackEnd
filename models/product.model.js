@@ -1,12 +1,12 @@
 const db = require('../utils/db.util');
 module.exports = {
+  findAll() {
+    return db('products');
+  },
+
   save(product) {
     return db('products')
       .insert(product);
-  },
-
-  findAll() {
-    return db('products');
   },
 
   findById(id) {

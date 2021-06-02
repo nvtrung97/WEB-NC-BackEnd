@@ -17,7 +17,7 @@ router.route('/:id')
         categoryController.findById(req, res)
     })
 
-    .put(require('../../middlewares/validate.mdw')(schema), async (req, res) => {
+    .put(async (req, res) => {
         categoryController.updateById(req, res)
     })
 

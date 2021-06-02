@@ -43,6 +43,6 @@ module.exports = {
         const page = req.query.page || 1;
         const productId = req.query.product_id || 0;
         var list = await reviewModel.getReviewOfProduct(productId, limit, page);
-        res.json(list);
+        return res.json(list);
     },
 }

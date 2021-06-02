@@ -3,15 +3,14 @@ const userModel = require('../models/user.model');
 module.exports = {
     async findAll(req, res) {
         const list = await userModel.findAll();
-        res.json(list);
+        return res.json(list);
     },
 
     async save(req, res) {
-        const user = req.body;
-        user.password = bcrypt.hashSync(user.password, 10);
-        const newUser = await userModel.save(user);
-        delete newUser.password;
-        res.status(201).json(newUser);
+        const category = req.body;
+        const ids = await categoryModel.save(category);
+        category._id = ids[0];
+        return res.status(201).json(category);
     },
 
     async findById(req, res) {
@@ -20,6 +19,22 @@ module.exports = {
         if (user === null) {
             return res.status(204).end();
         }
-        res.json(user);
+        return res.json(user);
+    },
+
+    async updateById(req, res) {
+        const id = req.params.id || 0;
+        categoryModel.updateById(id, req.body)
+            .then(() => {
+                return res.status(204).end();
+            });
+    },
+
+    async deleteById(req, res) {
+        const id = req.params.id || 0;
+        categoryModel.deleteById(id)
+            .then(() => {
+                return res.status(204).end();
+            });
     },
 }
