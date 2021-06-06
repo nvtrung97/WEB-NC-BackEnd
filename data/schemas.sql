@@ -125,10 +125,6 @@ FOREIGN KEY (user_id) REFERENCES users(_id) ON DELETE CASCADE;
 
 -- ----
 ALTER TABLE videos
-ADD CONSTRAINT fk_video_user
-FOREIGN KEY (user_id) REFERENCES users(_id) ON DELETE CASCADE;
-
-ALTER TABLE videos
 ADD CONSTRAINT fk_video_product
 FOREIGN KEY (product_id) REFERENCES products(_id) ON DELETE CASCADE;
 
