@@ -7,7 +7,8 @@ module.exports = {
     },
 
     async save(req, res) {
-        const registeredlist = req.body;
+        let registeredlist = req.body;
+        registeredlist.user_id = req.user.user_id;
         const ids = await registeredlistModel.save(registeredlist);
         registeredlist._id = ids[0];
         return res.status(201).json(registeredlist);
@@ -39,7 +40,7 @@ module.exports = {
     },
 
     async getRegisteredlistOfUser(req, res) {
-        const user_id = req.params.user_id || 0;
+        const user_id = req.user.user_id || 0;
         var list = await registeredlistModel.findAllByUserId(user_id);
         return res.json(list);
     },

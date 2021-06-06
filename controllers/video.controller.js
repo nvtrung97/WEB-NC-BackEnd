@@ -26,9 +26,21 @@ module.exports = {
     },
 
     async getVideoOfProductAndUser(req, res) {
-        const user_id = req.params.user_id || 0;
-        const product_id = req.params.product_id || 0;
+        const user_id = req.user.user_id || 0;
+        const product_id = req.params.id || 0;
         var list = await videoModel.findAByUserIdAndProductId(user_id, product_id);
+        if (list.length == 0)
+            return res.json({
+                message: 'Please register this product.'
+            })
+        return res.json(list);
+    },
+
+    async pauseProductAndUser(req, res) {
+        const user_id = req.user.user_id || 0;
+        const product_id = req.params.id || 0;
+        const video_id = req.body.video_id;
+        var list = await videoModel.updateByProductAndUser(user_id, product_id, video_id);
         return res.json(list);
     },
 }

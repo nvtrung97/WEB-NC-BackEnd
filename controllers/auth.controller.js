@@ -14,7 +14,6 @@ module.exports = {
         if (loginType == 'auth') {
             // xử lí login tài khoản mật khẩu bình thường 
             const user = await userModel.findByEmail(req.body.email);
-
             if (user.length == 0)
                 return res.status(400).json({
                     message: 'Sign in error. Email does not exist.'
@@ -31,7 +30,7 @@ module.exports = {
                 };
                 let token = jwt.generateToken(auth, '3d');
                 let refreshToken = uuid.v4();
-                await userModel.updateById({ rf_token: refreshToken }, user[0]._id);
+                await userModel.updateById(user[0]._id, { rf_token: refreshToken });
                 return res.status(201).json({
                     accessToken: 'Bearer ' + token,
                     refreshToken: refreshToken,
@@ -80,7 +79,7 @@ module.exports = {
                     }
                     else {
                         dataUserResponse.user_id = users[0]._id;
-                        await userModel.updateById({ rf_token: refreshToken, email_confirmed: true }, users[0]._id)
+                        await userModel.updateById(users[0]._id, { rf_token: refreshToken, email_confirmed: true })
                     }
 
                     const auth = { user_id: dataUserResponse.user_id, role: 0 };

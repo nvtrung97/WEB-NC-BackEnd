@@ -75,8 +75,10 @@ router.route('/:id')
 /* lấy video theo product theo id (ví dụ ...product/1/videos)
 param: id
 */
-router.route('/:id/videos')
-    .get((req, res) => {
-        videoController.getVideoOfProductAndUser(req, res);
-    });
+router.get('/:id/videos', require('../middlewares/auth.mdw').verifyToken, (req, res) => {
+    videoController.getVideoOfProductAndUser(req, res);
+});
+router.get('/:id/pause', require('../middlewares/auth.mdw').verifyToken, (req, res) => {
+    videoController.pauseProductAndUser(req, res);
+});
 module.exports = router;

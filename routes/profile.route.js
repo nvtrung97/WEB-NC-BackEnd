@@ -1,6 +1,6 @@
 const express = require('express');
 const userModel = require('../models/user.model');
-const userController = require('../controllers/user.controller');
+const profileController = require('../controllers/profile.controller');
 const watchlistController = require('../controllers/watchlist.controller');
 const registeredlistController = require('../controllers/registeredlist.controller');
 
@@ -8,23 +8,20 @@ const registeredlistController = require('../controllers/registeredlist.controll
 
 const router = express.Router();
 
-router.route('/:id')
+router.route('/')
   .get((req, res) => {
-    userController.findById(req, res);
+    profileController.getProfile(req, res);
   })
   //cập nhật profile
   .put((req, res) => {
-    userController.updateById(req, res);
+    profileController.updateProfile(req, res);
   })
-  .delete((req, res) => {
-    //something
-  });
 
-/* thông tin watchlist theo user_id (ví dụ ...users/1/watchlists)
+/* thông tin watchlist theo user_id
 param:
       - user_id
 */
-router.route('/:user_id/watchlists')
+router.route('/watch-lists')
   //xem khóa học yêu thích
   .get((req, res) => {
     watchlistController.getWatchlistOfUser(req, res);
@@ -34,23 +31,23 @@ router.route('/:user_id/watchlists')
     watchlistController.save(req, res);
   });
 
-/* thông tin watchlist theo user_id và watchlist_id (ví dụ ...users/1/watch-lists)
+/* thông tin watchlist theo user_id và watchlist_id
 param:
     - user_id
     - watchlist_id
 */
-router.route('/:user_id/watch-lists/:watchlist_id')
+router.route('/watch-lists/:watchlist_id')
   //loại bỏ khóa học yêu thích
   .delete((req, res) => {
     watchlistController.deleteById(req, res);
   });
 
-/* thông tin registeredlist theo user_id (ví dụ ...users/1/registered-lists)
+/* thông tin registeredlist theo user_id
 param:
       - user_id
       - watchlist_id
 */
-router.route('/:user_id/registered-lists')
+router.route('/registered-lists')
   //xem khóa học đã đăng kí
   .get((req, res) => {
     registeredlistController.getRegisteredlistOfUser(req, res);
