@@ -9,7 +9,7 @@ query:
     - page (default 1)
 */
 router.route('/')
-    .get(async (req, res) => {
+    .get((req, res) => {
         reviewController.getReviewOfProduct(req, res);
     });
 module.exports = router;
