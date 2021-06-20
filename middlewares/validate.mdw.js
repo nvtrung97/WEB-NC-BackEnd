@@ -7,6 +7,5 @@ module.exports = schema => (req, res, next) => {
   if (!valid) {
     return res.status(400).json(validate.errors);
   }
-
   next();
 }
