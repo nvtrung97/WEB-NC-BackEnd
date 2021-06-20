@@ -42,10 +42,10 @@ module.exports = {
     },
 
     async productOfCategory(req, res) {
-        const categoryId = req.query.category_id || 0;
+        const category_id = req.query.category_id || 0;
         const limit = req.query.limit || 12;
         const page = req.query.page || 1;
-        var list = await productModel.getProductOfCategory(categoryId, limit, page);
+        var list = await productModel.getProductOfCategory(category_id, limit, page);
         return res.json(list);
     },
 
@@ -63,8 +63,8 @@ module.exports = {
 
     async mostOfCategory(req, res) {
         const limit = req.query.limit || 5;
-        const categoryId = req.query.category_id || 0;
-        var list = await productModel.getMostOfCategory(categoryId, limit);
+        const category_id = req.query.category_id || 0;
+        var list = await productModel.getMostOfCategory(category_id, limit);
         return res.json(list);
     },
 

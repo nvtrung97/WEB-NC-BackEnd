@@ -1,5 +1,6 @@
 const express = require('express');
 const productController = require('../controllers/product.controller');
+const videoController = require('../controllers/video.controller');
 const router = express.Router();
 
 /* lấy danh sách product theo category_id
@@ -9,7 +10,7 @@ query:
     - page (default 1)
  */
 router.route('/')
-    .get(async (req, res) => {
+    .get((req, res) => {
         productController.productOfCategory(req, res);
     });
 
@@ -18,7 +19,7 @@ query:
     - limit (default 4)
  */
 router.route('/highlight-of-week')
-    .get(async (req, res) => {
+    .get((req, res) => {
         productController.highlightOfWeek(req, res);
     });
 
@@ -27,7 +28,7 @@ query:
     - limit (default 10)
  */
 router.route('/most-of-view')
-    .get(async (req, res) => {
+    .get((req, res) => {
         productController.mostOfView(req, res);
     });
 
@@ -36,7 +37,7 @@ query:
     - limit (default 10)
 */
 router.route('/lastest')
-    .get(async (req, res) => {
+    .get((req, res) => {
         productController.latestProduct(req, res);
     });
 
@@ -47,7 +48,7 @@ query:
     - limit (default 5)
 */
 router.route('/most-of-category')
-    .get(async (req, res) => {
+    .get((req, res) => {
         productController.mostOfCategory(req, res);
     });
 
@@ -60,7 +61,7 @@ query:
     - order (default 'desc', 2 option desc và asc)
  */
 router.route('/search')
-    .get(async (req, res) => {
+    .get((req, res) => {
         productController.searchProduct(req, res);
     });
 
@@ -68,7 +69,16 @@ router.route('/search')
 param: id 
 */
 router.route('/:id')
-    .get(async (req, res) => {
-        productController.detailProduct(req, res)
+    .get((req, res) => {
+        productController.detailProduct(req, res);
     });
+/* lấy video theo product theo id (ví dụ ...product/1/videos)
+param: id
+*/
+router.get('/:id/videos', require('../middlewares/auth.mdw').verifyToken, (req, res) => {
+    videoController.getVideoOfProductAndUser(req, res);
+});
+router.get('/:id/pause', require('../middlewares/auth.mdw').verifyToken, (req, res) => {
+    videoController.pauseProductAndUser(req, res);
+});
 module.exports = router;

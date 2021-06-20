@@ -7,10 +7,10 @@ module.exports = {
     },
 
     async save(req, res) {
-        const category = req.body;
-        const ids = await categoryModel.save(category);
-        category._id = ids[0];
-        return res.status(201).json(category);
+        const user = req.body;
+        const ids = await userModel.save(user);
+        user._id = ids[0];
+        return res.status(201).json(user);
     },
 
     async findById(req, res) {
@@ -24,7 +24,7 @@ module.exports = {
 
     async updateById(req, res) {
         const id = req.params.id || 0;
-        categoryModel.updateById(id, req.body)
+        userModel.updateById(id, req.body)
             .then(() => {
                 return res.status(204).end();
             });
@@ -32,7 +32,7 @@ module.exports = {
 
     async deleteById(req, res) {
         const id = req.params.id || 0;
-        categoryModel.deleteById(id)
+        userModel.deleteById(id)
             .then(() => {
                 return res.status(204).end();
             });

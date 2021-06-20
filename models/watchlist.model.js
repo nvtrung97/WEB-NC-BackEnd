@@ -1,0 +1,41 @@
+const db = require('../utils/db.util');
+
+module.exports = {
+  findAll() {
+    return db('watch_lists');
+  },
+
+  save(watch_list) {
+    return db('watch_lists')
+      .insert(watch_list);
+  },
+
+  findById(id) {
+    return db('watch_lists')
+      .where('_id', id)
+      .then((watch_lists) => {
+        if (watch_lists.length === 0) {
+          return null;
+        }
+        return watch_lists[0];
+      })
+  },
+
+  updateById(id, data) {
+    return db('watch_lists')
+      .where('_id', id)
+      .update(data);
+  },
+
+  deleteById(id) {
+    return db('watch_lists')
+      .where('_id', id)
+      .delete();
+  },
+
+  //custom
+  findAllByUserId(user_id) {
+    return db('watch_lists')
+      .where('user_id', user_id)
+  }
+};

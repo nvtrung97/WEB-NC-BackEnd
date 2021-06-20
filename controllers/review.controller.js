@@ -41,8 +41,8 @@ module.exports = {
     async getReviewOfProduct(req, res) {
         const limit = req.query.limit || 5;
         const page = req.query.page || 1;
-        const productId = req.query.product_id || 0;
-        var list = await reviewModel.getReviewOfProduct(productId, limit, page);
+        const product_id = req.query.product_id || 0;
+        var list = await reviewModel.getReviewOfProduct(product_id, limit, page);
         return res.json(list);
     },
 }
