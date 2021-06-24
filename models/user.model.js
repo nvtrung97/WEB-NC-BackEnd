@@ -27,21 +27,21 @@ module.exports = {
             });
     },
 
-    updateById(id, data) {
-        return db('users')
-            .where('_id', id)
-            .update(data);
+    updateById(id, entity) {
+        return db('users').where('_id', '=', id)
+        .returning('email')
+        .update(entity).debug(true)
     },
 
     updateByEmail(entity, email) {
         return db('users').where('email', '=', email)
             .returning('email')
-            .update(entity)
+            .update(entity).debug(true)
     },
 
     deleteById(id) {
         return db('users')
-            .where('_id', id)
+            .where('_id', '=', id)
             .delete();
     },
 

@@ -102,13 +102,13 @@ module.exports = {
                     message: 'Sign up error. Email already exists.'
                 });
             else
-                await userModel.updateById(req.body, user[0]._id);
+                await userModel.updateById(user[0]._id, req.body);
         } else await userModel.save(req.body);
         // tài khoản có mà chưa xác nhận sẽ gửi mail lại OTP hoặc đăng kí mới cũng vậy
         let OTP = otpGenerator.generate(6, { alphabets: true });
         const resultSent = await email.sendMail(req.body.email, `Your OTP is ${OTP} \n Kí tên \n Nguyễn Văn Trung`, 'Email confirmation from online course');
         let auth = { email: req.body.email, OTP_hash: bcrypt.hashSync(OTP, Number(process.env.KEY_PASSWORD)) };
-        let tokenOTP = jwt.generateToken(auth, '30s');
+        let tokenOTP = jwt.generateToken(auth, '220s');
         res.status(201).json({ email_confirmed: false, token_otp: tokenOTP });
     },
 

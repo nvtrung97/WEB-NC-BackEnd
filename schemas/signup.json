@@ -6,7 +6,7 @@
       "address",
       "birthday"
     ],
-    "additionalProperties": false,
+    "additionalProperties": true,
     "type":"object",
     "properties": {
       "email": {
