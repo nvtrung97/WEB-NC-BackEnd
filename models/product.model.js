@@ -121,13 +121,13 @@ module.exports = {
   //fb api
   getDetailFacebookProduct(id) {
     const query =
-      `select p._id, p.name, c.name as category, u._id as user, p.url_image, p.score
+      `select p._id, p.name, c.name as category, u.full_name, p.url_image, p.score, p.short_description
       from products p
-      where p._id = ${id}
       left join categories c
       on p.category_id = c._id
       left join users u
-      on p.user_id = u._id`;
+      on p.user_id = u._id
+      where p._id = ${id}`;
     return db.raw(query).then((results) => results[0])
   },
 };
