@@ -118,4 +118,16 @@ module.exports = {
       limit ` + limit;
     return db.raw(query).then((results) => results[0])
   },
+  //fb api
+  getDetailFacebookProduct(id) {
+    const query =
+      `select p._id, p.name, c.name as category, u._id as user, p.url_image, p.score
+      from products p
+      where p._id = ${id}
+      left join categories c
+      on p.category_id = c._id
+      left join users u
+      on p.user_id = u._id`;
+    return db.raw(query).then((results) => results[0])
+  },
 };

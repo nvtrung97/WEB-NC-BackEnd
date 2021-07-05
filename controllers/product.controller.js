@@ -84,6 +84,12 @@ module.exports = {
         return res.json(list);
     },
 
+    async detailFacebookProduct(req, res) {
+        const id = req.params.id || 0;
+        var product = await productModel.getDetailFacebookProduct(id);
+        return res.json(product);
+    },
+
     async detailProduct(req, res) {
         const id = req.params.id || 0;
         var product = await productModel.findById(id);

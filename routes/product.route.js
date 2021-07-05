@@ -64,7 +64,10 @@ router.route('/search')
     .get((req, res) => {
         productController.searchProduct(req, res);
     });
-
+router.route('/facebook-api/:id')
+    .get((req, res) => {
+        productController.detailFacebookProduct(req, res);
+    });
 /* lấy product theo id (ví dụ ...product/1)
 param: id 
 */
