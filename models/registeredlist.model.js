@@ -36,6 +36,6 @@ module.exports = {
   //custom
   findAllByUserId(user_id) {
     return db('registered_lists')
-      .where('user_id', user_id)
+      .where({ 'user_id': user_id })
   }
 };

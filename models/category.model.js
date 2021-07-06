@@ -41,6 +41,7 @@ module.exports = {
         from webncdb.products p
         left join webncdb.registered_lists r
         on r.product_id = p._id and datediff(now(), r.create_at) < 7
+        where p.deleted = 0
         group by p.category_id
         having count > 0)
         as result

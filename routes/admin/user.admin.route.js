@@ -8,9 +8,9 @@ router.route('/')
         userController.findAll(req, res)
     })
 
-// .post(require('../../middlewares/validate.mdw')(schema), (req, res) => {
-//     userController.save(req, res)
-// });
+    .post(require('../../middlewares/validate.mdw')(schema), (req, res) => {
+        userController.save(req, res)
+    });
 
 router.route('/:id')
     .get((req, res) => {

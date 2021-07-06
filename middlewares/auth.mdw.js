@@ -1,4 +1,5 @@
 var jwt = require('jsonwebtoken');
+var userModel = require('../models/user.model');
 module.exports = {
     verifyRoleAdmin(req, res, next) {
         let user = req.user;
@@ -28,8 +29,15 @@ module.exports = {
         if (!tokenHeader && tokenUri) {
             try {
                 const { auth } = jwt.verify(tokenUri, process.env.SECRECT_KEY);
-                req.user = auth;
-                next();
+                if (userModel.findById(auth._id).deleted != 0)
+                    res.status(401).json({
+                        status: 401,
+                        message: 'User is not existed'
+                    });
+                else {
+                    req.user = auth;
+                    next();
+                }
             } catch (err) {
                 res.status(401).json({
                     status: 401,
@@ -39,8 +47,15 @@ module.exports = {
         } else if (tokenHeader && !tokenUri) {
             try {
                 const { auth } = jwt.verify(tokenHeader, process.env.SECRECT_KEY);
-                req.user = auth;
-                next();
+                if (userModel.findById(auth._id).deleted != 0)
+                    res.status(401).json({
+                        status: 401,
+                        message: 'User is not existed'
+                    });
+                else {
+                    req.user = auth;
+                    next();
+                }
             } catch (err) {
                 res.status(401).json({
                     status: 401,
@@ -63,8 +78,15 @@ module.exports = {
                 let { auth } = jwt.verify(tokenHeader, process.env.SECRECT_KEY, {
                     ignoreExpiration: true
                 });
-                req.user = auth;
-                next();
+                if (userModel.findById(auth._id).deleted != 0)
+                    res.status(401).json({
+                        status: 401,
+                        message: 'User is not existed'
+                    });
+                else {
+                    req.user = auth;
+                    next();
+                }
             } catch (err) {
                 res.status(401).json({
                     status: 401,
@@ -76,8 +98,15 @@ module.exports = {
                 let { auth } = jwt.verify(tokenHeader, process.env.SECRECT_KEY, {
                     ignoreExpiration: true
                 });
-                req.user = auth;
-                next();
+                if (userModel.findById(auth._id).deleted != 0)
+                    res.status(401).json({
+                        status: 401,
+                        message: 'User is not existed'
+                    });
+                else {
+                    req.user = auth;
+                    next();
+                }
             } catch (err) {
                 res.status(401).json({
                     status: 401,

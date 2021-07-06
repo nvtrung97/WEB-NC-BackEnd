@@ -1,7 +1,7 @@
 const db = require('../utils/db.util');
 module.exports = {
     findAll() {
-        return db('users');
+        return db('users').where('deleted', 0);
     },
 
     save(user) {
@@ -11,7 +11,7 @@ module.exports = {
 
     findById(id) {
         return db('users')
-            .where('_id', id)
+            .where({ '_id': id, 'deleted': 0 })
             .then((users) => {
                 if (users.length === 0) {
                     return null;
@@ -20,20 +20,20 @@ module.exports = {
             })
     },
     findByEmail(email) {
-        return db('users').where('email', email)
+        return db('users').where({ 'email': email, 'deleted': 0 })
             .then((users) => {
                 return users;
             });
     },
 
     updateById(id, entity) {
-        return db('users').where('_id', '=', id)
-        .returning('email')
-        .update(entity).debug(true)
+        return db('users').where({ '_id': id, 'deleted': 0 })
+            .returning('email')
+            .update(entity).debug(true)
     },
 
     updateByEmail(entity, email) {
-        return db('users').where('email', '=', email)
+        return db('users').where({ 'email': email, 'deleted': 0 })
             .returning('email')
             .update(entity).debug(true)
     },
@@ -41,18 +41,18 @@ module.exports = {
     deleteById(id) {
         return db('users')
             .where('_id', '=', id)
-            .delete();
+            .update('deleted', 1);
     },
 
 
     isValidRFToken: async (user_id, rf_token) => {
         return db('users')
-            .where('_id', user_id)
+            .where({ '_id': user_id, 'deleted': 0 })
             .andWhere('rf_token', rf_token)
             .then((response) => {
                 if (response.length == 0) return false;
                 return true;
             });
-    },
+    }
 
 }
