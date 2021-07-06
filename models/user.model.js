@@ -19,7 +19,6 @@ module.exports = {
                 return users[0];
             })
     },
-
     findByEmail(email) {
         return db('users').where('email', email)
             .then((users) => {

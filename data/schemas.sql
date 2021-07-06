@@ -157,7 +157,8 @@ FOREIGN KEY (user_id) REFERENCES users(_id) ON DELETE CASCADE;
 ALTER TABLE registered_lists
 ADD CONSTRAINT fk_registered_list_product
 FOREIGN KEY (product_id) REFERENCES products(_id) ON DELETE CASCADE;
-
+ALTER TABLE users ADD COLUMN deleted BOOLEAN DEFAULT 0;
+ALTER TABLE products ADD COLUMN deleted BOOLEAN DEFAULT 0;
 -- BEGIN;
 --  INSERT INTO products VALUES(1, 'Khóa Học Tiếng Anh Cơ Bản','Cải thiện tiếng anh nhanh chóng', 'Khóa học sẽ giúp bạn khắc phục tất cả khó khăn ngay ban đầu, khơi nguồn niềm đam mê với TIẾNG ANH. Khóa học cho bạn biết được cách học tiếng Anh đúng cách. Các bạn sẽ được nhập vai vào các tình huống tiếng Anh giao tiếp hết sức thú vị thực tế hàng ngày.', 1500000, 1, 83),
 --  (2, 'Khóa học tiếng anh Nâng cao', '14 1/2 Carat Created Pink Sapphire Sterling Silver Bracelet w/ Diamond Accents', '<P><STRONG>Tiếng Anh có khoảng 750.000 từ vựng. Nhưng thực ra, nếu bạn nắm được 3000 từ thông dụng nhất, bạn có thể thành thạo 4 kỹ năng tiếng anh mà nhiều người hằng mong đợi. Khóa học sẽ giúp bạn hệ thống lại những kiến thức vốn có của mình một cách khoa học và giúp bạn nắm chắc 4 kỹ năng quan trọng của tiếng anh.</STRONG></P>\r\n<UL>\r\n    <LI>Loại hàng: Hàng trong nước</LI>\r\n</UL>\r\n', 300000, 1, 64),

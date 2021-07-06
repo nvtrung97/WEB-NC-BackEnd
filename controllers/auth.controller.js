@@ -46,7 +46,6 @@ module.exports = {
                 message: 'Sign in error. Password incorrect.'
             });
         }
-
         else if (loginType == 'google') {
             // xử lí đăng nhập gg google
             client.verifyIdToken({ idToken: req.body.token_id, audience: process.env.GOOGLE_AUTH_CLIENT_ID })
