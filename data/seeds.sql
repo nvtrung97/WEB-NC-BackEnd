@@ -1,12 +1,12 @@
 -- add users
 -- pass =1
-INSERT INTO users (email, password, email_confirmed,full_name, birthday, address)
+INSERT INTO users (email, password, email_confirmed,full_name, birthday, address, role)
 VALUES 
-('hao@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Hào', '1999/09/24', 'ktx B TPHCM'),
-('trieu@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Mang Triệu', '1999/09/4', 'ktx B TPHCM'),
-('ngon@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Ngôn', '1999/05/24', 'Quận 5 TPHCM'),
-('thanh@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Thanh', '1994/02/24', 'Nguyễn Văn Cừ, quận 5, TPHCM'),
-('nhat@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Nhật', '1992/09/24', 'ktx A TPHCM');
+('hao@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Hào', '1999/09/24', 'ktx B TPHCM',1),
+('trieu@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Mang Triệu', '1999/09/4', 'ktx B TPHCM',1),
+('ngon@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Ngôn', '1999/05/24', 'Quận 5 TPHCM',1),
+('thanh@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Thanh', '1994/02/24', 'Nguyễn Văn Cừ, quận 5, TPHCM',1),
+('nhat@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Nhật', '1992/09/24', 'ktx A TPHCM',1);
 -- add categories
 INSERT INTO categories (_id,name)
 VALUES 
