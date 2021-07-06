@@ -2,7 +2,8 @@ var jwt = require('jsonwebtoken');
 module.exports = {
     verifyRoleAdmin(req, res, next) {
         let user = req.user;
-        if (user.role != 2); {
+        console.log(user.role);
+        if (user.role != 2) {
             res.status(401).json({
                 status: 401,
                 message: '[Permission]: You dont have permission to access this API'
