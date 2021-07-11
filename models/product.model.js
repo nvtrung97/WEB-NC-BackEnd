@@ -11,7 +11,7 @@ module.exports = {
 
   findById(id) {
     return db('products')
-      .where({ _id: id, deleted: 0 })
+      .where({ '_id': id, 'deleted': 0 })
       .then((products) => {
         if (products.length === 0) {
           return null;
@@ -22,7 +22,7 @@ module.exports = {
 
   findByCategoryId(id) {
     return db('products')
-      .where({ category_id: id, deleted: 0 })
+      .where({ 'category_id': id, 'deleted': 0 })
       .then((products) => {
         if (products.length === 0) {
           return null;
@@ -32,13 +32,13 @@ module.exports = {
   },
   updateById(id, data) {
     return db('products')
-      .where({ _id: id, deleted: 0 })
+      .where({ '_id': id, 'deleted': 0 })
       .update(data);
   },
 
   deleteById(id) {
     return db('products')
-      .where({ _id: id, deleted: 0 })
+      .where({ '_id': id, 'deleted': 0 })
       .update('deleted', 1);
   },
   //custom
@@ -56,12 +56,14 @@ module.exports = {
   //top product hot của tuần
   getHighlightOfWeek(limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.url_image, count(r.product_id) as count
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, count(r.product_id) as count
       from products p
       left join registered_lists r
       on r.product_id = p._id
       left join categories c
       on p.category_id = c._id
+      left join users u
+      on p.user_id = u._id
       where p.deleted = 0
       group by p._id
       having count > 0
@@ -73,10 +75,12 @@ module.exports = {
   //top product view cao
   getMostOfView(limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.url_image, p.number_students as number_views
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views
       from products p
       left join categories c
       on p.category_id = c._id
+      left join users u
+      on p.user_id = u._id
       where p.deleted = 0
       order by number_views desc
       limit ` + limit;
@@ -86,10 +90,12 @@ module.exports = {
   //top product moi nhat
   getLastestProduct(limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.url_image, p.create_at
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.create_at
       from products p
       left join categories c
       on p.category_id = c._id
+      left join users u
+      on p.user_id = u._id
       where p.deleted = 0
       order by p.create_at desc
       limit ` + limit;
@@ -100,13 +106,13 @@ module.exports = {
   searchProduct(keyword, type, limit, page, order) {
     console.log(type);
     const queryName =
-      `select p._id, p.name, p.category_id, c.name as category, p.url_image, p.score, p.short_description
-      from products p, categories c
-      where match(p.name) against('${keyword}') and p.category_id = c._id and p.deleted = 0`;
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description
+      from products p, categories c, users u
+      where match(p.name) against('${keyword}') and p.category_id = c._id and p.deleted = 0 and p.user_id = u._id`;
     const queryCatgeory =
-      `select p._id, p.name, p.category_id, c.name as category, p.url_image, p.score, p.short_description
-      from products p, categories c
-      where p.category_id = c._id and p.deleted = 0 and match(c.name) against('${keyword}'in boolean mode)`;
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description
+      from products p, categories c, users u
+      where p.category_id = c._id and p.deleted = 0 and p.user_id = u._id and match(c.name) against('${keyword}'in boolean mode)`;
     const queryBonus =
       ` order by p.score ${order}
         limit ${limit}
@@ -123,10 +129,12 @@ module.exports = {
   //top product theo category
   getMostOfCategory(categoryId, limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.url_image, p.number_students as number_views
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views
 from products p
 left join categories c
 on p.category_id = ${categoryId} and p.category_id = c._id
+left join users u
+on p.user_id = u._id
 where p.deleted = 0
 order by number_views desc
 limit ` + limit;
@@ -144,4 +152,33 @@ on p.user_id = u._id
 where p.deleted = 0 and p._id = ${id} and u.deleted = 0`;
     return db.raw(query).then((results) => results[0])
   },
+  // api cho giao vien
+  findAllByUserId(userId) {
+    return db('products').where({ 'user_id': userId, 'deleted': 0 });
+  },
+
+  findByIdAndUserId(id, userId) {
+    return db('products')
+      .where({ '_id': id, 'user_id': userId, 'deleted': 0 })
+      .then((products) => {
+        if (products.length === 0) {
+          return null;
+        }
+        return products[0];
+      })
+  },
+
+  updateByIdAndUserId(id, userId, data) {
+    return db('products')
+      .where({ '_id': id, 'user_id': userId, 'deleted': 0 })
+      .update(data);
+  },
+
+  //status 1: chua xong, 0: da xong
+  updateStatusFinal(id, userId) {
+    return db('products')
+      .where({ '_id': id, 'user_id': userId, 'deleted': 0 })
+      .update('status', 0);
+  }
 };
+
