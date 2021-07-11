@@ -37,5 +37,10 @@ module.exports = {
   findAllByUserId(user_id) {
     return db('registered_lists')
       .where({ 'user_id': user_id })
-  }
+  },
+
+  findByProductIdAndUserId(product_id, user_id) {
+    return db('registered_lists')
+      .where({ 'product_id': product_id, 'user_id': user_id })
+  },
 };

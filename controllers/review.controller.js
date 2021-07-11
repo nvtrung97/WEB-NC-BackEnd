@@ -1,5 +1,5 @@
 const reviewModel = require('../models/review.model');
-
+const registeredModel = require('../models/registeredlist.model');
 module.exports = {
     // async findAll(req, res) {
     //     const list = await reviewModel.findAll();
@@ -44,5 +44,18 @@ module.exports = {
         const product_id = req.query.product_id || 0;
         var list = await reviewModel.getReviewOfProduct(product_id, limit, page);
         return res.json(list);
+    },
+
+    async postReviewOfProduct(req, res) {
+        const product_id = req.query.product_id || 0;
+        const user_id = req.user.user_id || 0;
+        var product = await registeredModel.findByProductIdAndUserId(product_id, user_id);
+        if (product) {
+            const review = req.body;
+            const ids = await reviewModel.save(review);
+            review._id = ids[0];
+            return res.status(201).json(review);
+        }
+        else return res.status(403).json({ message: 'You do not have permission' });
     },
 }

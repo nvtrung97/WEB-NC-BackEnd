@@ -11,5 +11,11 @@ query:
 router.route('/')
     .get((req, res) => {
         reviewController.getReviewOfProduct(req, res);
-    });
+    })
+
+    //product_id
+    .post(require('../middlewares/auth.mdw').verifyToken, (req, res) => {
+        reviewController.postReviewOfProduct(req, res);
+    })
+
 module.exports = router;
