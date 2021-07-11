@@ -129,7 +129,7 @@ module.exports = {
   //top product theo category
   getMostOfCategory(categoryId, limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views, , p.score, p.number_reviews
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views, p.score, p.number_reviews
 from products p
 left join categories c
 on p.category_id = ${categoryId} and p.category_id = c._id
