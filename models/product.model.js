@@ -44,7 +44,7 @@ module.exports = {
   //custom
   //product theo thể loại
   getProductOfCategory(categoryId, limit, page) {
-    return db.select('products._id', 'products.name', 'category_id', 'categories.name as category', 'user_id as author_id', 'full_name as author_name', 'number_reviews', 'url_image')
+    return db.select('products._id', 'products.name', 'category_id', 'categories.name as category', 'user_id as author_id', 'full_name as author_name', 'number_reviews', 'score', 'url_image')
       .from('products')
       .leftJoin('users', 'products.user_id', 'users._id')
       .leftJoin('categories', 'products.category_id', 'categories._id')
@@ -56,7 +56,7 @@ module.exports = {
   //top product hot của tuần
   getHighlightOfWeek(limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, count(r.product_id) as count
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, count(r.product_id) as count, p.score, p.number_reviews
       from products p
       left join registered_lists r
       on r.product_id = p._id
@@ -75,7 +75,7 @@ module.exports = {
   //top product view cao
   getMostOfView(limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views, p.score, p.number_reviews
       from products p
       left join categories c
       on p.category_id = c._id
@@ -90,7 +90,7 @@ module.exports = {
   //top product moi nhat
   getLastestProduct(limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.create_at
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.create_at, p.score, p.number_reviews
       from products p
       left join categories c
       on p.category_id = c._id
@@ -106,11 +106,11 @@ module.exports = {
   searchProduct(keyword, type, limit, page, order) {
     console.log(type);
     const queryName =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description, p.number_reviews
       from products p, categories c, users u
       where match(p.name) against('${keyword}') and p.category_id = c._id and p.deleted = 0 and p.user_id = u._id`;
     const queryCatgeory =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description, p.number_reviews
       from products p, categories c, users u
       where p.category_id = c._id and p.deleted = 0 and p.user_id = u._id and match(c.name) against('${keyword}'in boolean mode)`;
     const queryBonus =
@@ -129,7 +129,7 @@ module.exports = {
   //top product theo category
   getMostOfCategory(categoryId, limit) {
     const query =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views
+      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.number_students as number_views, , p.score, p.number_reviews
 from products p
 left join categories c
 on p.category_id = ${categoryId} and p.category_id = c._id
