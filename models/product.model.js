@@ -20,6 +20,16 @@ module.exports = {
       })
   },
 
+  findByCategoryId(id) {
+    return db('products')
+      .where({ category_id: id, deleted: 0 })
+      .then((products) => {
+        if (products.length === 0) {
+          return null;
+        }
+        return products[0];
+      })
+  },
   updateById(id, data) {
     return db('products')
       .where({ _id: id, deleted: 0 })

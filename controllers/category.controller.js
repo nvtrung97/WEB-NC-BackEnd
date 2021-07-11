@@ -1,4 +1,5 @@
 const categoryModel = require('../models/category.model');
+const productModel = require('../models/product.model');
 
 module.exports = {
     async findAll(req, res) {
@@ -32,6 +33,8 @@ module.exports = {
 
     async deleteById(req, res) {
         const id = req.params.id || 0;
+        let isHasProduct = await productModel.findByCategoryId(id);
+        if (isHasProduct) return res.status(403).json({ code: 403, message: "Category has courses." });
         categoryModel.deleteById(id)
             .then(() => {
                 return res.status(204).end();
