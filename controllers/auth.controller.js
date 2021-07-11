@@ -22,7 +22,15 @@ module.exports = {
                 return res.status(400).json({
                     message: 'Sign in error. Email does not exist.'
                 });
-
+                if (user.length !=0){
+                    let isDeleted = await userModel.findByEmailInDB(req.body.email)
+                    if(isDeleted.deleted == 1){
+                        return res.status(403).json({
+                            message: 'user don"t allow login'
+                        });
+                    }
+                }
+            
             if (bcrypt.compareSync(req.body.password, user[0].password)) {
                 const auth = {
                     user_id: user[0]._id,

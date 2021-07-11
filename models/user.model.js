@@ -35,9 +35,15 @@ module.exports = {
                 return users;
             });
     },
+    findByEmailInDB(email) {
+        return db('users').where({ 'email': email })
+            .then((users) => {
+                return users;
+            });
+    },
 
     updateById(id, entity) {
-        return db('users').where({ '_id': id, 'deleted': 0 })
+        return db('users').where({ '_id': id})
             .returning('email')
             .update(entity)
     },

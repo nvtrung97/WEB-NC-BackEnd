@@ -12,6 +12,8 @@ module.exports = {
         user.password = bcrypt.hashSync(user.password, Number(process.env.KEY_PASSWORD));
         const users = await userModel.findByEmailInDB(user.email);
         if (users) {
+            user._id = users._id;
+            user.role = 1;
             await userModel.updateById(users._id, { deleted: false, ...user });
         } else {
             const ids = await userModel.save(user);
@@ -31,6 +33,9 @@ module.exports = {
 
     async updateById(req, res) {
         const id = req.params.id || 0;
+        if(req.body.password) {
+            req.body.password = bcrypt.hashSync(req.body.password, Number(process.env.KEY_PASSWORD));
+        }
         userModel.updateById(id, req.body)
             .then(() => {
                 return res.status(204).end();
