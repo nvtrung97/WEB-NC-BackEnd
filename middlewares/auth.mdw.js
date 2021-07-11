@@ -22,14 +22,15 @@ module.exports = {
         }
         next();
     },
-    verifyToken(req, res, next) {
+    async verifyToken(req, res, next) {
         let tokenHeader = req.header('authorization');
         if (tokenHeader != null) tokenHeader = tokenHeader.split(' ')[1];
         const tokenUri = req.params.token;
         if (!tokenHeader && tokenUri) {
             try {
-                const { auth } = jwt.verify(tokenUri, process.env.SECRECT_KEY);
-                if (userModel.findById(auth._id).deleted != 0)
+                const { auth } = jwt.verify(tokenHeader, process.env.SECRECT_KEY);
+                let user = await userModel.findById(auth.user_id)
+                if (user.deleted != 0)
                     res.status(401).json({
                         status: 401,
                         message: 'User is not existed'
@@ -47,7 +48,8 @@ module.exports = {
         } else if (tokenHeader && !tokenUri) {
             try {
                 const { auth } = jwt.verify(tokenHeader, process.env.SECRECT_KEY);
-                if (userModel.findById(auth._id).deleted != 0)
+                let user = await userModel.findById(auth.user_id)
+                if (user.deleted != 0)
                     res.status(401).json({
                         status: 401,
                         message: 'User is not existed'
@@ -69,7 +71,7 @@ module.exports = {
             });
         }
     },
-    verifyTokenExpiration(req, res, next) {
+    async verifyTokenExpiration(req, res, next) {
         let tokenHeader = req.header('authorization');
         if (tokenHeader != null) tokenHeader = tokenHeader.split(' ')[1];
         const tokenUri = req.params.token;
@@ -78,7 +80,8 @@ module.exports = {
                 let { auth } = jwt.verify(tokenHeader, process.env.SECRECT_KEY, {
                     ignoreExpiration: true
                 });
-                if (userModel.findById(auth._id).deleted != 0)
+                let user = await userModel.findById(auth.user_id)
+                if (user.deleted != 0)
                     res.status(401).json({
                         status: 401,
                         message: 'User is not existed'
