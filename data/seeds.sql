@@ -7,6 +7,7 @@ VALUES
 ('ngon@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Ngôn', '1999/05/24', 'Quận 5 TPHCM',1),
 ('thanh@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Thanh', '1994/02/24', 'Nguyễn Văn Cừ, quận 5, TPHCM',1),
 ('nhat@gmail.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Nhật', '1992/09/24', 'ktx A TPHCM',1);
+('admin@admin.com', '$2a$13$bfhJiF15Rrf6EbsxVeGtTOB0z3/j2XjxTedeVjE53/4yEtSYYwiGu', true, 'Nguyễn Nhật', '1992/09/24', 'ktx A TPHCM',1);
 -- add categories
 INSERT INTO categories (_id,name)
 VALUES 

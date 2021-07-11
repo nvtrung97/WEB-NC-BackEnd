@@ -7,7 +7,6 @@ router.route('/')
     .get((req, res) => {
         categoryController.findAll(req, res)
     })
-
     .post(require('../../middlewares/validate.mdw')(schema), (req, res) => {
         categoryController.save(req, res)
     });
