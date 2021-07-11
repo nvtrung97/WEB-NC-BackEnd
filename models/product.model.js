@@ -59,7 +59,7 @@ module.exports = {
       `select p._id, p.name, p.category_id, c.name as category, p.url_image, count(r.product_id) as count
       from products p
       left join registered_lists r
-      on r.product_id = p._id and datediff(now(), r.create_at) < 7
+      on r.product_id = p._id
       left join categories c
       on p.category_id = c._id
       where p.deleted = 0
