@@ -129,7 +129,7 @@ left join categories c
 on p.category_id = ${categoryId} and p.category_id = c._id
 where p.deleted = 0
 order by number_views desc
-limit` + limit;
+limit ` + limit;
     return db.raw(query).then((results) => results[0])
   },
   //fb api
