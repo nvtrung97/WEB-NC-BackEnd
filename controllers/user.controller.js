@@ -1,5 +1,6 @@
 const userModel = require('../models/user.model');
 
+const bcrypt = require('bcryptjs');
 module.exports = {
     async findAll(req, res) {
         const list = await userModel.findAll();
@@ -7,9 +8,15 @@ module.exports = {
     },
 
     async save(req, res) {
-        const user = req.body;
-        const ids = await userModel.save(user);
-        user._id = ids[0];
+        let user = req.body;
+        user.password = bcrypt.hashSync(user.password, Number(process.env.KEY_PASSWORD));
+        const users = await userModel.findByEmailInDB(user.email);
+        if (users) {
+            await userModel.updateById(users._id, { deleted: false, ...user });
+        } else {
+            const ids = await userModel.save(user);
+            user._id = ids[0];
+        }
         return res.status(201).json(user);
     },
 

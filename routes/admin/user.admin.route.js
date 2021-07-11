@@ -16,11 +16,9 @@ router.route('/:id')
     .get((req, res) => {
         userController.findById(req, res)
     })
-
     .put((req, res) => {
         userController.updateById(req, res)
     })
-
     .delete((req, res) => {
         userController.deleteById(req, res)
     });

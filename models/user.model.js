@@ -19,6 +19,16 @@ module.exports = {
                 return users[0];
             })
     },
+    findByEmailInDB(email) {
+        return db('users')
+            .where({ 'email': email })
+            .then((users) => {
+                if (users.length === 0) {
+                    return null;
+                }
+                return users[0];
+            })
+    },
     findByEmail(email) {
         return db('users').where({ 'email': email, 'deleted': 0 })
             .then((users) => {
@@ -29,13 +39,13 @@ module.exports = {
     updateById(id, entity) {
         return db('users').where({ '_id': id, 'deleted': 0 })
             .returning('email')
-            .update(entity).debug(true)
+            .update(entity)
     },
 
     updateByEmail(entity, email) {
         return db('users').where({ 'email': email, 'deleted': 0 })
             .returning('email')
-            .update(entity).debug(true)
+            .update(entity)
     },
 
     deleteById(id) {
