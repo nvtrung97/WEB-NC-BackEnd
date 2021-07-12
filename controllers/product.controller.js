@@ -42,10 +42,18 @@ module.exports = {
 
     async productOfCategory(req, res) {
         const category_id = req.query.category_id || 0;
-        const limit = req.query.limit || 12;
+        const limit = req.query.limit || 6;
         const page = req.query.page || 1;
+        var totalProduct = await productModel.countProductOfCategory(category_id);
         var list = await productModel.getProductOfCategory(category_id, limit, page);
-        return res.json(list);
+        var result = {
+            totalProduct,
+            totalPage: (totalProduct % limit) > 0 ? ((totalProduct - totalProduct % limit) / limit + 1) : (totalProduct - totalProduct % limit) / limit,
+            page: page,
+            pageSize: limit,
+            records: list
+        };
+        return res.json(result);
     },
 
     async highlightOfWeek(req, res) {
@@ -75,12 +83,21 @@ module.exports = {
 
     async searchProduct(req, res) {
         const keyword = req.query.keyword || '';
-        const type = req.query.type || 'name';
-        const limit = req.query.limit || 10;
+        const limit = req.query.limit || 6;
         const page = req.query.page || 1;
         const order = req.query.order || 'desc';
-        var list = await productModel.searchProduct(keyword, type, limit, page, order);
-        return res.json(list);
+        const category_id = req.query.category_id || 0;
+        var list = await productModel.searchProduct(keyword, category_id, limit, page, order);
+        var totalProduct = await productModel.countSearchProduct(keyword, category_id);
+
+        var result = {
+            totalProduct,
+            totalPage: (totalProduct % limit) > 0 ? ((totalProduct - totalProduct % limit) / limit + 1) : (totalProduct - totalProduct % limit) / limit,
+            page,
+            pageSize: limit,
+            records: list
+        };
+        return res.json(result);
     },
 
     async detailFacebookProduct(req, res) {

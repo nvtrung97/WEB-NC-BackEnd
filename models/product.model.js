@@ -53,6 +53,14 @@ module.exports = {
       .offset((page - 1) * limit)
   },
 
+  countProductOfCategory(categoryId) {
+    const query =
+      `select count(*) as totalProduct
+      from products p
+      where p.category_id = ${categoryId} and p.deleted = 0`;
+    return db.raw(query).then((results) => results[0][0].totalProduct)
+  },
+
   //top product hot của tuần
   getHighlightOfWeek(limit) {
     const query =
@@ -103,28 +111,43 @@ module.exports = {
   },
 
   //tim kiem product
-  searchProduct(keyword, type, limit, page, order) {
-    console.log(type);
+  searchProduct(keyword, category_id, limit, page, order) {
     const queryName =
       `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description, p.number_reviews
       from products p, categories c, users u
-      where match(p.name) against('${keyword}') and p.category_id = c._id and p.deleted = 0 and p.user_id = u._id`;
-    const queryCatgeory =
-      `select p._id, p.name, p.category_id, c.name as category, p.user_id as author_id, u.full_name as author_name, p.url_image, p.score, p.short_description, p.number_reviews
-      from products p, categories c, users u
-      where p.category_id = c._id and p.deleted = 0 and p.user_id = u._id and match(c.name) against('${keyword}'in boolean mode)`;
-    const queryBonus =
+      where ( match(p.name) against('${keyword}') or 
+              match(c.name) against('${keyword}' in boolean mode) )
+            and p.category_id = c._id and p.deleted = 0 and p.user_id = u._id`;
+
+    var subquery =
       ` order by p.score ${order}
-        limit ${limit}
-        offset ${(page - 1) * limit} `;
-    let query = '';
-    if (type == 'category') {
-      query = queryCatgeory + queryBonus;
+    limit ${limit}
+    offset ${(page - 1) * limit} `;
+    var query = '';
+    if (category_id != 0) {
+      query = queryName + ` and p.category_id = ${category_id}` + subquery;
     }
     else {
-      query = queryName + queryBonus;
+      query = queryName + subquery;
     }
     return db.raw(query).then((results) => results[0])
+  },
+
+  countSearchProduct(keyword, category_id) {
+    const queryName =
+      `select count(p._id) as totalProduct
+      from products p, categories c, users u
+      where ( match(p.name) against('${keyword}') or 
+              match(c.name) against('${keyword}' in boolean mode) )
+            and p.category_id = c._id and p.deleted = 0 and p.user_id = u._id`;
+    var query = '';
+    if (category_id != 0) {
+      query = queryName + ` and p.category_id = ${category_id}`;
+    }
+    else {
+      query = queryName;
+    }
+    return db.raw(query).then((results) => results[0][0].totalProduct)
   },
   //top product theo category
   getMostOfCategory(categoryId, limit) {
