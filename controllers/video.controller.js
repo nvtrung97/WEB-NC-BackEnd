@@ -28,7 +28,7 @@ module.exports = {
     async getVideoOfProductAndUser(req, res) {
         const user_id = req.user.user_id || 0;
         const product_id = req.params.id || 0;
-        var list = await videoModel.findAByUserIdAndProductId(user_id, product_id);
+        var list = await videoModel.findByUserIdAndProductId(user_id, product_id);
         if (list.length == 0)
             return res.json({
                 message: 'Please register this product.'
@@ -43,4 +43,5 @@ module.exports = {
         var list = await videoModel.updateByProductAndUser(user_id, product_id, video_id);
         return res.json(list);
     },
+
 }

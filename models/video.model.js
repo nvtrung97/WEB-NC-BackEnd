@@ -13,11 +13,17 @@ module.exports = {
     return db.raw(query).then((results) => results[0]);
   },
 
-  findAByUserIdAndProductId(user_id, product_id) {
+  findByUserIdAndProductId(user_id, product_id) {
     const query =
       `select v.*
       from videos v, registered_lists r
       where r.user_id = ${user_id} and r.product_id = ${product_id} and v.product_id = r.product_id`;
     return db.raw(query).then((results) => results[0]);
-  }
+  },
+
+  findPreviewByProductId(product_id) {
+    return db('videos')
+      .where('product_id', product_id)
+      .limit(5)
+  },
 }

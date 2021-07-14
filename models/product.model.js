@@ -21,7 +21,7 @@ module.exports = {
   },
   findDetailById(id) {
     return db('products')
-    .select(['products._id', 'products.name', 'products.url_image', 'products.short_description', 'products.full_description', 'products.status',    'products.score', 'products.number_reviews', 'products.number_students',   'products.create_at', 'products.update_at', 'products.category_id', 'categories.name as category_name', 'users.email', 'products.user_id', 'users.full_name'])
+      .select('products.*', 'categories.name as category_name', 'users.email', 'users.full_name')
       .innerJoin('categories', { 'categories._id': 'products.category_id' })
       .innerJoin('users', { 'users._id': 'products.user_id' })
       .where({ 'products._id': id, 'products.deleted': 0 }).debug(true)

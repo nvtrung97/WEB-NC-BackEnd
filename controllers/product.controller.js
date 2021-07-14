@@ -1,5 +1,6 @@
 const productModel = require('../models/product.model');
 const userModel = require('../models/user.model');
+const videoModel = require('../models/video.model');
 
 
 module.exports = {
@@ -109,7 +110,7 @@ module.exports = {
     async detailProduct(req, res) {
         const id = req.params.id || 0;
         var product = await productModel.findDetailById(id);
-        // res.json({ ...product, author: user });
-        return res.json(product);
+        var videos = await videoModel.findPreviewByProductId(id);
+        return res.json({ ...product, videos: videos });
     }
 }
