@@ -1,7 +1,8 @@
 const productModel = require('../models/product.model');
 const userModel = require('../models/user.model');
 const videoModel = require('../models/video.model');
-
+const registeredlistModel = require('../models/registeredlist.model');
+var jwt = require('jsonwebtoken');
 
 module.exports = {
 
@@ -109,8 +110,26 @@ module.exports = {
 
     async detailProduct(req, res) {
         const id = req.params.id || 0;
+        let registered = false;
+        let token = req.header('authorization');
+        if (token) token = token.split(' ')[1]
+        else token = req.params.token;
+        if (token) {
+            try {
+                const { auth } = jwt.verify(token, process.env.SECRECT_KEY);
+                let user = await userModel.findById(auth.user_id)
+                if (user.deleted == 0) {
+                    var list = await registeredlistModel.findByProductIdAndUserId(id, auth.user_id);
+                    if (list.length != 0) {
+                        registered = true;
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
         var product = await productModel.findDetailById(id);
         var videos = await videoModel.findPreviewByProductId(id);
-        return res.json({ ...product, videos: videos });
+        return res.json({ ...product, registered, videos });
     }
 }

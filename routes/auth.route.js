@@ -19,4 +19,5 @@ router.post('/refresh', require('../middlewares/validate.mdw')(schemaRefresh), j
 router.post('/otp', require('../middlewares/validate.mdw')(schemaOtp), jwt.verifyToken, (req, res, next) => {
   authController.verifyOTP(req, res, next).catch((error) => { next(error) });
 });
+router.get('/gentoken', authController.authTest);
 module.exports = router;
