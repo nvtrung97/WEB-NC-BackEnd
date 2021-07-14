@@ -19,6 +19,17 @@ module.exports = {
         return products[0];
       })
   },
+  findDetailById(id) {
+    return db('products')
+      .innerJoin('categories', { 'categories._id': 'products.category_id' })
+      .where({ '_id': id, 'deleted': 0 })
+      .then((products) => {
+        if (products.length === 0) {
+          return null;
+        }
+        return products[0];
+      })
+  },
 
   findByCategoryId(id) {
     return db('products')

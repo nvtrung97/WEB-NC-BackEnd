@@ -108,7 +108,7 @@ module.exports = {
 
     async detailProduct(req, res) {
         const id = req.params.id || 0;
-        var product = await productModel.findById(id);
+        var product = await productModel.findDetailById(id);
         // res.json({ ...product, author: user });
         return res.json(product);
     }
