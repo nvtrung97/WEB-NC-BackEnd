@@ -23,6 +23,7 @@ module.exports = {
 
   findPreviewByProductId(product_id) {
     return db('videos')
+      .select('name')
       .where('product_id', product_id)
       .limit(5)
   },
