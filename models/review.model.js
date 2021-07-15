@@ -39,5 +39,10 @@ module.exports = {
       .where('product_id', productId)
       .limit(limit)
       .offset((page - 1) * limit)
+  },
+
+  getByProductIdAndUserId(productId, userId) {
+    return db('reviews')
+      .where({ 'product_id': productId, 'user_id': userId })
   }
 };

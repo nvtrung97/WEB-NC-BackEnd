@@ -37,5 +37,10 @@ module.exports = {
   findAllByUserId(user_id) {
     return db('watch_lists')
       .where('user_id', user_id)
+  },
+
+  getByProductIdUserId(user_id) {
+    return db('watch_lists')
+      .where('user_id', user_id)
   }
 };

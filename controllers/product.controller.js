@@ -2,6 +2,8 @@ const productModel = require('../models/product.model');
 const userModel = require('../models/user.model');
 const videoModel = require('../models/video.model');
 const registeredlistModel = require('../models/registeredlist.model');
+const reviewModel = require('../models/review.model');
+const watchlistModel = require('../models/watchlist.model');
 var jwt = require('jsonwebtoken');
 
 module.exports = {
@@ -111,6 +113,8 @@ module.exports = {
     async detailProduct(req, res) {
         const id = req.params.id || 0;
         let registered = false;
+        let reviewed = false;
+        let liked = false;
         let token = req.header('authorization');
         if (token) token = token.split(' ')[1]
         else token = req.params.token;
@@ -123,6 +127,14 @@ module.exports = {
                     if (list.length != 0) {
                         registered = true;
                     }
+                    var reivews = await reviewModel.getByProductIdAndUserId(id, auth.user_id);
+                    if (reivews.length != 0) {
+                        reviewed = true;
+                    }
+                    var likes = await watchlistModel.getByProductIdAndUserId(id, auth.user_id);
+                    if (likes.length != 0) {
+                        likedn = true;
+                    }
                 }
             } catch (err) {
                 console.log(err);
@@ -130,6 +142,6 @@ module.exports = {
         }
         var product = await productModel.findDetailById(id);
         var videos = await videoModel.findPreviewByProductId(id);
-        return res.json({ ...product, registered, videos });
+        return res.json({ ...product, liked, registered, reviewed, videos });
     }
 }

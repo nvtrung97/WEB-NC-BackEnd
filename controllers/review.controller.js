@@ -49,13 +49,17 @@ module.exports = {
     async postReviewOfProduct(req, res) {
         const product_id = req.query.product_id || 0;
         const user_id = req.user.user_id || 0;
-        var product = await registeredModel.findByProductIdAndUserId(product_id, user_id);
-        if (product) {
-            let  review = req.body;
+        var registered = await registeredModel.findByProductIdAndUserId(product_id, user_id);
+        if (registered) {
+            let review = req.body;
             review.product_id = product_id;
             review.user_id = user_id;
             const ids = await reviewModel.save(review);
             review._id = ids[0];
+            const product = await productModel.findById(req.body.product_id);
+            let number_reviews = product.number_reviews + 1;
+            let score = (product.score * product.number_reviews + review.score) / number_reviews;
+            await productModel.updateById(req.body.product_id, { number_reviews, score });
             return res.status(201).json(review);
         }
         else return res.status(403).json({ message: 'You do not have permission' });
