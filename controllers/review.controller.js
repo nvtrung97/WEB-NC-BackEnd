@@ -51,7 +51,9 @@ module.exports = {
         const user_id = req.user.user_id || 0;
         var product = await registeredModel.findByProductIdAndUserId(product_id, user_id);
         if (product) {
-            const review = req.body;
+            let  review = req.body;
+            review.product_id = product_id;
+            review.user_id = user_id;
             const ids = await reviewModel.save(review);
             review._id = ids[0];
             return res.status(201).json(review);
