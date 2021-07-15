@@ -36,7 +36,8 @@ module.exports = {
   //custom
   findAllByUserId(user_id) {
     return db('registered_lists')
-      .where({ 'user_id': user_id })
+    .innerJoin('products', { 'products._id': 'registered_lists.product_id' })
+      .where({ 'registered_lists.user_id': user_id })
   },
 
   findByProductIdAndUserId(product_id, user_id) {

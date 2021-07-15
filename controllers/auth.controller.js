@@ -36,7 +36,7 @@ module.exports = {
                     user_id: user[0]._id,
                     role: user[0].role
                 };
-                let token = jwt.generateToken(auth, '3d');
+                let token = jwt.generateToken(auth, '30d');
                 let refreshToken = uuid.v4();
                 await userModel.updateById(user[0]._id, { rf_token: refreshToken });
                 return res.status(201).json({
@@ -90,7 +90,7 @@ module.exports = {
                     }
 
                     const auth = { user_id: dataUserResponse.user_id, role: 0 };
-                    let token = jwt.generateToken(auth, '3d');
+                    let token = jwt.generateToken(auth, '30d');
                     return res.status(201).json({ accessToken: 'Bearer ' + token, refreshToken: refreshToken, user: dataUserResponse });
                 })
         } else
@@ -151,7 +151,7 @@ module.exports = {
             user_id: 1,
             role: 0
         };
-        let token = jwt.generateToken(auth, '3d');
+        let token = jwt.generateToken(auth, '30d');
         let refreshToken = uuid.v4();
         return res.status(201).json({
             accessToken: 'Bearer ' + token,
