@@ -133,7 +133,7 @@ module.exports = {
                     }
                     var likes = await watchlistModel.getByProductIdAndUserId(id, auth.user_id);
                     if (likes.length != 0) {
-                        likedn = true;
+                        liked = true;
                     }
                 }
             } catch (err) {

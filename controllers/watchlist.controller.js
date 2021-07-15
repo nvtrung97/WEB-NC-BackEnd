@@ -22,4 +22,14 @@ module.exports = {
         var list = await watchlistModel.findAllByUserId(user_id);
         return res.json(list);
     },
+
+    async deleteByProductIdAndUserId(req, res) {
+        const productId = req.query.product_id || 0;
+        const userId = req.user.user_id;
+        var deleted = await watchlistModel.deleteByProductIdAndUserId(productId, userId);
+        if (deleted != 0)
+            return res.status(200).json({ message: 'Deleted' });
+        else
+            return res.status(200).json({ message: 'Delete fail' });
+    },
 }

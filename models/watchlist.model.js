@@ -39,8 +39,13 @@ module.exports = {
       .where('user_id', user_id)
   },
 
-  getByProductIdUserId(user_id) {
+  getByProductIdAndUserId(productId, userId) {
     return db('watch_lists')
-      .where('user_id', user_id)
+      .where({ 'product_id': productId, 'user_id': userId });
+  },
+  deleteByProductIdAndUserId(productId, userId) {
+    return db('watch_lists')
+      .where({ 'product_id': productId, 'user_id': userId })
+      .delete();
   }
 };

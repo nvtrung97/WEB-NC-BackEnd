@@ -29,18 +29,17 @@ router.route('/watch-lists')
   //thêm khóa học yêu thích
   .post((req, res) => {
     watchlistController.save(req, res);
-  });
+  })
+  .delete((req, res) => {
+    watchlistController.deleteByProductIdAndUserId(req, res);
+  });;
 
 /* thông tin watchlist theo user_id và watchlist_id
 param:
     - user_id
     - watchlist_id
 */
-router.route('/watch-lists/:watchlist_id')
-  //loại bỏ khóa học yêu thích
-  .delete((req, res) => {
-    watchlistController.deleteById(req, res);
-  });
+
 
 /* thông tin registeredlist theo user_id
 param:
