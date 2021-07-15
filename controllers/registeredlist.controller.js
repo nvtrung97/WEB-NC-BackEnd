@@ -11,7 +11,7 @@ module.exports = {
         let registeredlist = req.body;
         registeredlist.user_id = req.user.user_id;
         const registered = await registeredlistModel.findByProductIdAndUserId(req.body.product_id, req.user.user_id);
-        if (registered) res.status(200).json({ message: 'Registered before' });
+        if (registered.length != 0) res.status(200).json({ message: 'Registered before' });
         else {
             const product = await productModel.findById(req.body.product_id);
             await productModel.updateById(req.body.product_id, { number_students: product.number_students + 1 });
