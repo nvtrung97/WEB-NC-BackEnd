@@ -35,6 +35,7 @@ module.exports = {
   //review theo product
   getReviewOfProduct(productId, limit, page) {
     return db('reviews')
+      .innerJoin('users', { 'users._id': 'reviews.user_id' })
       .where('product_id', productId)
       .limit(limit)
       .offset((page - 1) * limit)
