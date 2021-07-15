@@ -58,7 +58,7 @@ module.exports = {
             review._id = ids[0];
             const product = await productModel.findById(req.body.product_id);
             let number_reviews = product.number_reviews + 1;
-            let score = (product.score * product.number_reviews + review.score) / number_reviews;
+            let score = Math.round((product.score * product.number_reviews + review.score) / number_reviews);
             await productModel.updateById(req.body.product_id, { number_reviews, score });
             return res.status(201).json(review);
         }
