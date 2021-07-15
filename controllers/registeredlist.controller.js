@@ -1,4 +1,5 @@
 const registeredlistModel = require('../models/registeredlist.model');
+const productModel = require('../models/product.model');
 
 module.exports = {
     async findAll(req, res) {
@@ -9,9 +10,15 @@ module.exports = {
     async save(req, res) {
         let registeredlist = req.body;
         registeredlist.user_id = req.user.user_id;
-        const ids = await registeredlistModel.save(registeredlist);
-        registeredlist._id = ids[0];
-        return res.status(201).json(registeredlist);
+        const registered = registeredlistModel.findByProductIdAndUserId(req.body.product_id, req.user.user_id);
+        if (registered) res.status(200).json({ message: 'Registered before' });
+        else {
+            const product = await productModel.findById(req.body.product_id);
+            await productModel.updateById(req.body.product_id, { number_students: product.number_students + 1 })
+            const ids = await registeredlistModel.save(registeredlist);
+            registeredlist._id = ids[0];
+            return res.status(201).json(registeredlist);
+        }
     },
 
     async findById(req, res) {

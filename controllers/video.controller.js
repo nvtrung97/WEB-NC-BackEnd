@@ -30,7 +30,7 @@ module.exports = {
         const product_id = req.params.id || 0;
         var list = await videoModel.findByUserIdAndProductId(user_id, product_id);
         if (list.length == 0)
-            return res.json({
+            return res.status().json({
                 message: 'Please register this product.'
             })
         return res.json(list);
