@@ -1,5 +1,6 @@
 const reviewModel = require('../models/review.model');
 const registeredModel = require('../models/registeredlist.model');
+const productModel = require('../models/product.model');
 module.exports = {
     // async findAll(req, res) {
     //     const list = await reviewModel.findAll();
@@ -50,7 +51,7 @@ module.exports = {
         const product_id = req.query.product_id || 0;
         const user_id = req.user.user_id || 0;
         var registered = await registeredModel.findByProductIdAndUserId(product_id, user_id);
-        if (registered) {
+        if (registered.length != 0) {
             let review = req.body;
             review.product_id = product_id;
             review.user_id = user_id;
