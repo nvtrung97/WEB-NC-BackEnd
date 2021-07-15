@@ -10,7 +10,7 @@ module.exports = {
     async save(req, res) {
         let registeredlist = req.body;
         registeredlist.user_id = req.user.user_id;
-        const registered = registeredlistModel.findByProductIdAndUserId(req.body.product_id, req.user.user_id);
+        const registered =  registeredlistModel.findByProductIdAndUserId(req.body.product_id, req.user.user_id);
         if (registered) res.status(200).json({ message: 'Registered before' });
         else {
             const product = await productModel.findById(req.body.product_id);
