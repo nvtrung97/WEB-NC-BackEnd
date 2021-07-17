@@ -7,10 +7,11 @@ module.exports = {
     async getProfile(req, res) {
         const id = req.user.user_id || 0;
         const user = await userModel.findById(id);
+        var list = await registeredlistModel.findAllByUserId(id);
         if (user === null) {
             return res.status(204).end();
         }
-        return res.json(user);
+        return res.json({ ...user, numberRegistered: list.length });
     },
 
     async updateProfile(req, res) {
