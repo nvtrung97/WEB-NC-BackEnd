@@ -81,7 +81,7 @@ param: id
 router.get('/:id/videos', require('../middlewares/auth.mdw').verifyToken, (req, res) => {
     videoController.getVideoOfProductAndUser(req, res);
 });
-router.get('/:id/pause', require('../middlewares/auth.mdw').verifyToken, (req, res) => {
+router.put('/:id/pause', require('../middlewares/auth.mdw').verifyToken, (req, res) => {
     videoController.pauseProductAndUser(req, res);
 });
 module.exports = router;
