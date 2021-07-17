@@ -143,5 +143,38 @@ module.exports = {
         var product = await productModel.findDetailById(id);
         var videos = await videoModel.findPreviewByProductId(id);
         return res.json({ ...product, liked, registered, reviewed, videos });
-    }
+    },
+
+    async findAllOfUser(req, res) {
+        const user_id = req.user.user_id || 0;
+        const list = await productModel.findAllByUserId(user_id);
+        return res.json(list);
+    },
+
+    async saveOfUser(req, res) {
+        const user_id = req.user.user_id || 0;
+        const product = req.body;
+        product.user_id = user_id;
+        const ids = await productModel.save(product);
+        product._id = ids[0];
+        return res.status(201).json(product);
+    },
+
+    async updateByIdAndUserId(req, res) {
+        const id = req.params.id || 0;
+        const user_id = req.user.user_id || 0;
+        productModel.updateByIdAndUserId(id, user_id, req.body)
+            .then(() => {
+                return res.status(204).end();
+            });
+    },
+
+    async deleteByIdAndUserId(req, res) {
+        const id = req.params.id || 0;
+        const user_id = req.user.user_id || 0;
+        productModel.deleteById(id, user_id)
+            .then(() => {
+                return res.status(204).end();
+            });
+    },
 }

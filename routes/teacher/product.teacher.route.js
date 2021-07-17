@@ -1,16 +1,22 @@
 const express = require('express');
 const productController = require('../../controllers/product.controller');
+const videoController = require('../../controllers/video.controller');
 const router = express.Router();
-const schema = require('../../schemas/product.json');
+// const schema = require('../../schemas/product.json');
 
 router.route('/')
     .get((req, res) => {
         productController.findAll(req, res)
     })
 
-    .post(require('../../middlewares/validate.mdw')(schema), (req, res) => {
-        productController.save(req, res)
+    .post((req, res) => {
+        productController.saveOfUser(req, res)
     });
+
+router.route('/final')
+    .get((req, res) => {
+        productController.finalByIdAndUserId(req, res)
+    })
 
 router.route('/:id')
     .get((req, res) => {
@@ -18,11 +24,14 @@ router.route('/:id')
     })
 
     .put((req, res) => {
-        productController.updateById(req, res)
+        productController.updateByIdAndUserId(req, res)
     })
 
     .delete((req, res) => {
-        productController.deleteById(req, res)
+        productController.deleteByIdAndUserId(req, res)
     });
 
+router.post('/:id/videos', (req, res) => {
+    videoController.saveByUserId(req, res);
+});
 module.exports = router;

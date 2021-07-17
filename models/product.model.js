@@ -193,21 +193,16 @@ where p.deleted = 0 and p._id = ${id} and u.deleted = 0`;
     return db('products').where({ 'user_id': userId, 'deleted': 0 });
   },
 
-  findByIdAndUserId(id, userId) {
-    return db('products')
-      .where({ '_id': id, 'user_id': userId, 'deleted': 0 })
-      .then((products) => {
-        if (products.length === 0) {
-          return null;
-        }
-        return products[0];
-      })
-  },
-
   updateByIdAndUserId(id, userId, data) {
     return db('products')
       .where({ '_id': id, 'user_id': userId, 'deleted': 0 })
       .update(data);
+  },
+
+  deleteByIdAndUserId(id, userId) {
+    return db('products')
+      .where({ '_id': id, 'user_id': userId, 'deleted': 0 })
+      .update('deleted', 1);
   },
 
   //status 1: chua xong, 0: da xong

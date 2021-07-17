@@ -44,4 +44,12 @@ module.exports = {
         return res.json(list);
     },
 
+    async saveByUserId(req, res) {
+        const video = req.body;
+        video.user_id = req.user.user_id || 0;
+        const ids = await videoModel.save(video);
+        video._id = ids[0];
+        return res.status(201).json(video);
+    },
+
 }

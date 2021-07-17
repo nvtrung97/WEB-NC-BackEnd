@@ -17,6 +17,12 @@ router.route('/')
     profileController.updateProfile(req, res);
   })
 
+router.route('/password')
+  //doi mat khau
+  .put((req, res) => {
+    profileController.changePassword(req, res);
+  })
+
 /* thông tin watchlist theo user_id
 param:
       - user_id

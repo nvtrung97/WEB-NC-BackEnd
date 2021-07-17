@@ -10,6 +10,6 @@ module.exports = (app) => {
     app.use('/api/v1/admin/products', require('./auth.mdw').verifyToken, require('./auth.mdw').verifyRoleAdmin, require('../routes/admin/product.admin.route'));
     app.use('/api/v1/admin/users', require('./auth.mdw').verifyToken, require('./auth.mdw').verifyRoleAdmin, require('../routes/admin/user.admin.route'));
 
-    // app.use('/api/v1/teacher/profile', require('./auth.mdw').verifyToken, require('./auth.mdw').verifyRoleLecturers, require('../routes/teacher/profile.teacher.route'));
-    // app.use('/api/v1/teacher/products', require('./auth.mdw').verifyToken, require('./auth.mdw').verifyRoleLecturers, require('../routes/teacher/product.teacher.route'));
+    // app.use('/api/v1/teacher/profiles', require('./auth.mdw').verifyToken, require('./auth.mdw').verifyRoleLecturers, require('../routes/teacher/profile.teacher.route'));
+    app.use('/api/v1/teacher/products', require('./auth.mdw').verifyToken, require('./auth.mdw').verifyRoleLecturers, require('../routes/teacher/product.teacher.route'));
 };
