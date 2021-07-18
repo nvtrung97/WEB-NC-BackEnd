@@ -32,10 +32,13 @@ module.exports = {
         if (compare && user) {
             req.body.password = bcrypt.hashSync(req.body.password, Number(process.env.KEY_PASSWORD));
         }
+        delete  req.body['oldPassword'];
         userModel.updateById(id, req.body)
             .then(() => {
                 return res.status(204).end();
-            });
+            }).catch((err)=>{
+                console.log(err);
+            })
     },
 
 }
