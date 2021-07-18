@@ -38,6 +38,7 @@ module.exports = {
     return db('watch_lists')
     .innerJoin('products', { 'watch_lists.product_id': 'products._id' })
     .innerJoin('users', { 'watch_lists.user_id': 'users._id' })
+    .innerJoin('categories', { 'categories._id': 'products.category_id' })
       .where('watch_lists.user_id', user_id)
   },
 
