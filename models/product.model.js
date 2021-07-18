@@ -131,7 +131,6 @@ module.exports = {
       where ( match(p.name) against('${keyword}') or 
               match(c.name) against('${keyword}' in boolean mode) )
             and p.category_id = c._id and p.deleted = 0 and p.user_id = u._id`;
-
     var subquery =
       ` order by p.score ${order}
     limit ${limit}
@@ -143,6 +142,7 @@ module.exports = {
     else {
       query = queryName + subquery;
     }
+    console.log(query);
     return db.raw(query).then((results) => results[0])
   },
 

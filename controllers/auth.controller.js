@@ -46,7 +46,8 @@ module.exports = {
                         user_id: user[0]._id,
                         full_name: user[0].full_name,
                         email: user[0].email,
-                        avatar_url: user[0].avatar_url || config.URL_LOGO_USER
+                        avatar_url: user[0].avatar_url || config.URL_LOGO_USER,
+                        role: user[0].role,
                     }
                 });
             }
@@ -65,10 +66,10 @@ module.exports = {
                 .then(async (response) => {
                     let users = await userModel.findByEmail(response.payload.email);
                     let dataUserResponse = {
-                        user_id: 0,
                         full_name: response.payload.name,
                         email: response.payload.email,
                         avatar_url: response.payload.picture
+
                     };
                     let refreshToken = uuid.v4();
 
@@ -83,8 +84,10 @@ module.exports = {
                         }
                         let newUser = await userModel.save(entity);
                         dataUserResponse.user_id = newUser[0]._id;
+                        dataUserResponse.role = 0;
                     }
                     else {
+                        dataUserResponse.role = users[0].role;
                         dataUserResponse.user_id = users[0]._id;
                         await userModel.updateById(users[0]._id, { rf_token: refreshToken, email_confirmed: true })
                     }
