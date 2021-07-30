@@ -14,7 +14,8 @@ module.exports = {
     },
     verifyRoleLecturers(req, res, next) {
         let user = req.user;
-        if (user.role != 1); {
+        console.log(user);
+        if (user.role != 1) {
             res.status(401).json({
                 status: 401,
                 message: '[Permission]: You dont have permission to access this API'
@@ -40,6 +41,7 @@ module.exports = {
                     next();
                 }
             } catch (err) {
+                console.log(err);
                 res.status(401).json({
                     status: 401,
                     message: 'Token is not valid'
@@ -59,6 +61,7 @@ module.exports = {
                     next();
                 }
             } catch (err) {
+                console.log(err);
                 res.status(401).json({
                     status: 401,
                     message: 'Token is not valid'
