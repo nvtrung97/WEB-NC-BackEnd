@@ -8,10 +8,12 @@ module.exports = {
   },
   findAllByTeacher(user_id) {
     return db('products')
-      .select('products.*', 'categories.name as category_name')
+      .select('products.*', 'categories.name as category_name', db.raw('COUNT(videos._id) as sum_video'))
       .where('deleted', 0)
       .where('products.user_id', user_id)
       .innerJoin('categories', { 'categories._id': 'products.category_id' })
+      .leftJoin('videos', { 'products._id': 'videos.product_id' })
+      .groupBy('products._id')
   },
 
   save(product) {
