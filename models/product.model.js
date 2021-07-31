@@ -1,14 +1,16 @@
 const db = require('../utils/db.util');
 module.exports = {
   findAll() {
-    return db('products').where('deleted', 0);
+    return db('products')
+    .select('products.*', 'categories.name as category_name')
+    .where('deleted', 0)
+    .innerJoin('categories', { 'categories._id': 'products.category_id' }).debug(true);
   },
 
   save(product) {
     return db('products')
       .insert(product);
   },
-
   findById(id) {
     return db('products')
       .where({ '_id': id, 'deleted': 0 })
