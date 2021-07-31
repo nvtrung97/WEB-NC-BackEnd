@@ -12,6 +12,12 @@ module.exports = {
         const list = await productModel.findAll();
         return res.json(list);
     },
+    async findAllTeacher(req, res) {
+        const id = req.user.user_id || 0;
+        const list = await productModel.findAllByTeacher(id);
+        console.log(list.length);
+        return res.json(list);
+    },
 
     async save(req, res) {
         const product = req.body;

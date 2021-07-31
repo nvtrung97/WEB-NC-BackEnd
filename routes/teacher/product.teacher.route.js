@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/')
     .get((req, res) => {
-        productController.findAll(req, res)
+        productController.findAllTeacher(req, res)
     })
 
     .post((req, res) => {
