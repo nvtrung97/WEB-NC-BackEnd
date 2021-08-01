@@ -46,7 +46,9 @@ module.exports = {
 
     async saveByUserId(req, res) {
         const video = req.body;
-        video.user_id = req.user.user_id || 0;
+        // video.user_id = req.user.user_id || 0;
+        // console.log(video);
+        video.product_id = req.params.id || 0;
         const ids = await videoModel.save(video);
         video._id = ids[0];
         return res.status(201).json(video);
