@@ -37,4 +37,11 @@ module.exports = {
       .where({ 'videos._id': video_id, 'videos.product_id': product_id, 'videos.product_id': 'products._id' })
       .delete();
   },
+  findOfUserIdAndProductId(user_id, product_id) {
+    const query =
+      `select v.*
+      from videos v, products p
+      where p.user_id = ${user_id} and p._id = ${product_id} and v.product_id = p._id`;
+    return db.raw(query).then((results) => results[0]);
+  },
 }

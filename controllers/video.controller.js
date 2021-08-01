@@ -54,7 +54,6 @@ module.exports = {
         return res.status(201).json(video);
     },
 
-
     async deleteVideo(req, res) {
         const video_id = req.params.video_id || 0;
         const product_id = req.params.id || 0;
@@ -63,6 +62,17 @@ module.exports = {
             .then(() => {
                 return res.status(204).end();
             });
+    },
+
+    async getVideoOfProductAndAuthorUser(req, res) {
+        const user_id = req.user.user_id || 0;
+        const product_id = req.params.id || 0;
+        var list = await videoModel.findOfUserIdAndProductId(user_id, product_id);
+        if (list.length == 0)
+            return res.status(400).json({
+                message: 'User not have product'
+            })
+        return res.json(list);
     },
 
 }
