@@ -178,7 +178,7 @@ module.exports = {
     async deleteByIdAndUserId(req, res) {
         const id = req.params.id || 0;
         const user_id = req.user.user_id || 0;
-        productModel.deleteById(id, user_id)
+        productModel.deleteByIdAndUserId(id, user_id)
             .then(() => {
                 return res.status(204).end();
             });

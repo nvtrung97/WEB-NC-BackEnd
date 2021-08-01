@@ -31,9 +31,13 @@ router.route('/:id')
         productController.deleteByIdAndUserId(req, res)
     });
 
-router.post('/:id/videos', (req, res) => {
-    videoController.saveByUserId(req, res);
-});
+router.route('/:id/videos')
+    .get((req, res) => {
+        videoController.getVideoOfProductAndAuthorUser(req, res);
+    })
+    .post((req, res) => {
+        videoController.saveByUserId(req, res);
+    })
 router.delete('/:id/videos/:video_id', (req, res) => {
     videoController.deleteVideo(req, res);
 });
