@@ -19,10 +19,11 @@ module.exports = {
 
     async deleteById(req, res) {
         const id = req.params.video_id || 0;
-        videoModel.deleteById(id)
-            .then(() => {
-                return res.status(204).end();
-            });
+        console.log(id);
+        await videoModel.deleteById(id)
+
+        return res.status(204).end();
+
     },
 
     async getVideoOfProductAndUser(req, res) {

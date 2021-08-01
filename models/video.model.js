@@ -23,7 +23,7 @@ module.exports = {
   deleteById(id) {
     return db('videos')
       .where('_id', id)
-      .delete();
+      .delete().debug(true);
   },
   findPreviewByProductId(product_id) {
     return db('videos')
