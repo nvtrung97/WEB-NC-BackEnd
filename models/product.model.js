@@ -23,7 +23,7 @@ module.exports = {
   findById(id) {
     return db('products')
       .select('products.*', 'categories.name as category_name')
-      .where({ '_id': id, 'deleted': 0 })
+      .where({ 'products._id': id, 'products.deleted': 0 })
       .innerJoin('categories', { 'categories._id': 'products.category_id' })
       .then((products) => {
         if (products.length === 0) {
