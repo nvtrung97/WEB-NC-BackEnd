@@ -34,7 +34,7 @@ module.exports = {
   deleteVideo(video_id, product_id, user_id) {
     return db('videos')
       .leftJoin('products', 'products.user_id', user_id)
-      .where({ 'videos._id': video_id, 'videos.product_id': product_id })
+      .where({ 'videos._id': video_id, 'videos.product_id': product_id, 'videos.product_id': 'products._id' })
       .delete();
   },
 }
