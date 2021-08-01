@@ -54,4 +54,15 @@ module.exports = {
         return res.status(201).json(video);
     },
 
+
+    async deleteVideo(req, res) {
+        const video_id = req.params.video_id || 0;
+        const product_id = req.params.id || 0;
+        const user_id = req.user.user_id || 0;
+        videoModel.deleteById(video_id, product_id, user_id)
+            .then(() => {
+                return res.status(204).end();
+            });
+    },
+
 }
