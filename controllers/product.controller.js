@@ -183,4 +183,13 @@ module.exports = {
                 return res.status(204).end();
             });
     },
+
+    async finalByIdAndUserId(req, res) {
+        const id = req.params.id || 0;
+        const user_id = req.user.user_id || 0;
+        productModel.updateStatusFinal(id, user_id)
+            .then(() => {
+                return res.status(204).end();
+            });
+    },
 }

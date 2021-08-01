@@ -31,4 +31,9 @@ module.exports = {
       .where('product_id', product_id)
       .limit(5)
   },
+  deleteVideo(video_id, product_id, user_id) {
+    return db('videos')
+      .where({ '_id': video_id, 'product_id': product_id, 'user_id': user_id })
+      .delete();
+  },
 }

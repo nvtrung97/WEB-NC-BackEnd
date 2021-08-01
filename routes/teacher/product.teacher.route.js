@@ -13,7 +13,7 @@ router.route('/')
         productController.saveOfUser(req, res)
     });
 
-router.route('/final')
+router.route(':id/final')
     .get((req, res) => {
         productController.finalByIdAndUserId(req, res)
     })
@@ -35,6 +35,6 @@ router.post('/:id/videos', (req, res) => {
     videoController.saveByUserId(req, res);
 });
 router.delete('/:id/videos/:video_id', (req, res) => {
-    videoController.deleteById(req, res);
+    videoController.deleteVideo(req, res);
 });
 module.exports = router;
