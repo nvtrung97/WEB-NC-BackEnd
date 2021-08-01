@@ -20,7 +20,11 @@ module.exports = {
       where r.user_id = ${user_id} and r.product_id = ${product_id} and v.product_id = r.product_id`;
     return db.raw(query).then((results) => results[0]);
   },
-
+  deleteById(id) {
+    return db('videos')
+      .where('_id', id)
+      .delete();
+  },
   findPreviewByProductId(product_id) {
     return db('videos')
       .select('name')

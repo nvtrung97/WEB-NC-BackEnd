@@ -34,4 +34,7 @@ router.route('/:id')
 router.post('/:id/videos', (req, res) => {
     videoController.saveByUserId(req, res);
 });
+router.post('/:id/videos/:video_id', (req, res) => {
+    videoController.saveByUserId(req, res);
+});
 module.exports = router;
