@@ -6,9 +6,6 @@ module.exports = {
             auth: auth
         }, process.env.SECRECT_KEY,
             {
-
-
-                
                 expiresIn: expires
             });
     }

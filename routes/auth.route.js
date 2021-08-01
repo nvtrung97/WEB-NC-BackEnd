@@ -16,7 +16,7 @@ router.post('/signup', require('../middlewares/validate.mdw')(schemaSignup), (re
 router.post('/refresh', require('../middlewares/validate.mdw')(schemaRefresh), jwt.verifyTokenExpiration, (req, res, next) => {
   authController.refresh(req, res, next).catch((error) => { next(error) });
 });
-router.post('/otp', require('../middlewares/validate.mdw')(schemaOtp), jwt.verifyToken, (req, res, next) => {
+router.post('/otp', require('../middlewares/validate.mdw')(schemaOtp), jwt.verifyTokenOTP, (req, res, next) => {
   authController.verifyOTP(req, res, next).catch((error) => { next(error) });
 });
 router.get('/gentoken', authController.authTest);

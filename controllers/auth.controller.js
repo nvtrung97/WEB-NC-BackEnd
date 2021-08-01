@@ -56,6 +56,7 @@ module.exports = {
             });
         }
         else if (loginType == 'google') {
+            console.log('vô gg');
             // xử lí đăng nhập gg google
             client.verifyIdToken({ idToken: req.body.token_id, audience: process.env.GOOGLE_AUTH_CLIENT_ID })
                 .catch(() => {
@@ -118,7 +119,7 @@ module.exports = {
         let OTP = otpGenerator.generate(6, { alphabets: true });
         const resultSent = await email.sendMail(req.body.email, `Your OTP is ${OTP} \n Kí tên \n Nguyễn Văn Trung`, 'Email confirmation from online course');
         let auth = { email: req.body.email, OTP_hash: bcrypt.hashSync(OTP, Number(process.env.KEY_PASSWORD)) };
-        let tokenOTP = jwt.generateToken(auth, '220s');
+        let tokenOTP = jwt.generateToken(auth, '1d');
         res.status(201).json({ email_confirmed: false, token_otp: tokenOTP });
     },
 
@@ -137,6 +138,7 @@ module.exports = {
     },
 
     verifyOTP: async (req, res, next) => {
+        console.log(req.user);
         let { email, OTP_hash } = req.user;
         if (bcrypt.compareSync(req.body.otp, OTP_hash)) {
             await userModel.updateByEmail({ email_confirmed: true }, email);
