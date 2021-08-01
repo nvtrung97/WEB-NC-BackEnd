@@ -13,7 +13,7 @@ router.route('/')
         productController.saveOfUser(req, res)
     });
 
-router.route(':id/final')
+router.route('/:id/final')
     .get((req, res) => {
         productController.finalByIdAndUserId(req, res)
     })
