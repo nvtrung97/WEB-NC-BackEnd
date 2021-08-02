@@ -35,6 +35,12 @@ module.exports = {
                 return users;
             });
     },
+    findByEmailIgnoreDeleted(email) {
+        return db('users').where({ 'email': email})
+            .then((users) => {
+                return users;
+            });
+    },
     findByEmailInDB(email) {
         return db('users').where({ 'email': email })
             .then((users) => {

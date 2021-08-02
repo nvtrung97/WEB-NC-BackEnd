@@ -56,7 +56,6 @@ module.exports = {
             });
         }
         else if (loginType == 'google') {
-            console.log('vô gg');
             // xử lí đăng nhập gg google
             client.verifyIdToken({ idToken: req.body.token_id, audience: process.env.GOOGLE_AUTH_CLIENT_ID })
                 .catch(() => {
@@ -65,7 +64,7 @@ module.exports = {
                     })
                 })
                 .then(async (response) => {
-                    let users = await userModel.findByEmail(response.payload.email);
+                    let users = await userModel.findByEmailIgnoreDeleted(response.payload.email);
                     let dataUserResponse = {
                         full_name: response.payload.name,
                         email: response.payload.email,
@@ -73,7 +72,6 @@ module.exports = {
 
                     };
                     let refreshToken = uuid.v4();
-
                     if (users.length == 0) {
                         var entity = {
                             email: response.payload.email,
@@ -88,6 +86,11 @@ module.exports = {
                         dataUserResponse.role = 0;
                     }
                     else {
+                        if (users[0].deleted == 1)
+                            return res.status(400).json({
+                                status: 400,
+                                message: 'Refuse to login'
+                            })
                         dataUserResponse.role = users[0].role;
                         dataUserResponse.user_id = users[0]._id;
                         await userModel.updateById(users[0]._id, { rf_token: refreshToken, email_confirmed: true })
@@ -138,7 +141,6 @@ module.exports = {
     },
 
     verifyOTP: async (req, res, next) => {
-        console.log(req.user);
         let { email, OTP_hash } = req.user;
         if (bcrypt.compareSync(req.body.otp, OTP_hash)) {
             await userModel.updateByEmail({ email_confirmed: true }, email);
