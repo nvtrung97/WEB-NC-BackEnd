@@ -119,6 +119,7 @@ module.exports = {
     async detailProduct(req, res) {
         const id = req.params.id || 0;
         let registered = false;
+        let videoPause = null;
         let reviewed = false;
         let liked = false;
         let token = req.header('authorization');
@@ -132,6 +133,7 @@ module.exports = {
                     var list = await registeredlistModel.findByProductIdAndUserId(id, auth.user_id);
                     if (list.length != 0) {
                         registered = true;
+                        videoPause = list[0].video_pause_id;
                     }
                     var reivews = await reviewModel.getByProductIdAndUserId(id, auth.user_id);
                     if (reivews.length != 0) {
@@ -148,7 +150,7 @@ module.exports = {
         }
         var product = await productModel.findDetailById(id);
         var videos = await videoModel.findPreviewByProductId(id);
-        return res.json({ ...product, liked, registered, reviewed, videos });
+        return res.json({ ...product, liked, videoPause, registered, reviewed, videos });
     },
 
     async findAllOfUser(req, res) {

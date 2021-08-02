@@ -10,6 +10,7 @@ module.exports = {
     const query =
       `update registered_lists set video_pause_id = ${video_id}
       where user_id = ${user_id} and product_id = ${product_id}`;
+      console.log(query);
     return db.raw(query).then((results) => results[0]);
   },
 

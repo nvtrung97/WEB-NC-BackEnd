@@ -38,6 +38,7 @@ module.exports = {
     },
 
     async pauseProductAndUser(req, res) {
+        console.log('ok');
         const user_id = req.user.user_id || 0;
         const product_id = req.params.id || 0;
         const video_id = req.body.video_id;
